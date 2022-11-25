@@ -7,17 +7,7 @@ assignees: ''
 
 ---
 
-개발이 필요한 내용들을 issue에 정리해 놓으면 좋을것 같습니다.
 #
-**개발이 필요한 부분에 대한 이슈를 등록하기 위한 Issue Template 을 다음과 같은 형태로 생성**
-* * *   
-### Template name
-Request_Develop
-
-### About
-새로 추가할 기능, 페이지, 파일에 대한 suggest
-
-### Template content
 + **About**
 개발이 필요한 Feature에 대한 설명
     예시)
@@ -33,3 +23,4 @@ Request_Develop
    
 + **Additional Info**
 개발할 시 주의해야 할 사항, 다른 file과의 dependency 등 추가적으로 알려줘야 할 내용
+#
