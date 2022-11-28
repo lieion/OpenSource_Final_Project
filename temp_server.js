@@ -103,16 +103,8 @@ app.post('/order',(req,res)=>{ //주문
     }
 })
 
-app.get('/getOrder', (req, res) => { // myPage에서 내 주문 현황 확인
-    let ret=[]
-    let user=req.body.student_number;
-    let user_idx=orderList.indexOf(user);
-    user_idx.forEach(ord=>{
 
-    })
-    res.send(blueportMenu);
-})
-
+//blue port에 대해서 주문 정보를 보내준다.
 app.post('/blueportOrder', (req, res) => {
     console.log(req.body)
     let sid=req.body.id;
@@ -155,7 +147,7 @@ app.get('/pandorothyMenu', (req, res) => {
     res.send(JSON.stringify(pandorothyMenu));
 })
 
-app.post('/getCost', (req, res) => {
+app.post('/getCost', (req, res) => { //요청한 가격을 계산해서 보내준다
     let targetmarket=parseInt(req.body.market);
     let result=0
     if (targetmarket===1){
