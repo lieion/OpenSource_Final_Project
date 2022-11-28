@@ -113,8 +113,34 @@ app.get('/getOrder', (req, res) => { // myPage에서 내 주문 현황 확인
     res.send(blueportMenu);
 })
 
-app.get('/blueportOrder', (req, res) => {
-    res.send(JSON.stringify(blue_orderList));
+app.post('/blueportOrder', (req, res) => {
+    console.log(req.body)
+    let sid=req.body.id;
+    let ret=[];
+    let retno=1;
+    let menu=[];
+    for (let i=0;i<blueportMenu.length; i++)
+    {
+        menu.push(blueportMenu[i][1]);
+    }
+    blue_orderList.forEach(ord=>{
+        if(ord.user===sid){
+            let result=0;
+            let tempObj=new Object();
+            tempObj.no=retno;
+            retno+=1;
+            tempObj.menu=menu;
+            tempObj.order=ord.order;
+            for (let i=0;i<blueportMenu.length; i++)
+            {
+                result+=ord.order[i]*blueportMenu[i][2];
+            }
+            tempObj.order_price=result
+            tempObj.orderStatus=ord.isDone;
+            ret.push(tempObj);
+        }
+    })
+    res.send(JSON.stringify(ret));
 })  
 
 app.get('/blueportMenu', (req, res) => {

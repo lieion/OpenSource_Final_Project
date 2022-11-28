@@ -292,7 +292,6 @@
                     success: function (data) {
                         alert("주문 완료");
                         console.log(data);
-                        localStorage.setItem('id',data);
                         window.location.href="./myPage.html"
                     },
                     error: function (request, status, error) {
