@@ -1,20 +1,21 @@
-const express = require('express')
+const express = require('express');
 const cors=require("cors");
 const app = express()
 const port = 3000
 const bodyParser= require('body-parser')
-
-
+const fs = require("fs");
 app.use(bodyParser.urlencoded({extended: true})) 
 app.use(cors());
 
 app.use(express.json()) // for parsing application/json
 app.use(express.static('public'))
 let userInfo = []; //유저 로그인 정보
-
-/*
-    excel로 json 변환해서 카페 메뉴 정보를 txt파일로 폴더에 넣은 뒤 불러와서 array에 넣어주는 작업 예정
-*/
+let blueportMenu=new Array();
+let cafenamuMenu=new Array();
+let pandorothyMenu=new Array();
+let blue_orderList=[];
+let namu_orderList=[];
+let pandorothy_orderList=[];
 
 
 //개발용으로 확인 용
@@ -76,6 +77,84 @@ app.post('/logins',(req,res)=>{
     }
 })
 
+app.post('/order',(req,res)=>{ //주문
+    let inputOrder=new Object();
+    inputOrder.user=req.body.student_number;
+    inputOrder.market=parseInt(req.body.market);
+    inputOrder.order=req.body.price;
+    inputOrder.order_time=new Date();
+    inputOrder.order_price=parseInt(req.body.total)
+    if(inputOrder.order_price===0 || req.body.student_number===""){
+        res.status(400).end()
+    }
+    else{
+        inputOrder.isDone=0;
+        if(inputOrder.market===2){
+            
+            blue_orderList.push(inputOrder)
+        }
+        else if(market===1){
+            namu_orderList.push(inputOrder)
+        }
+        else{
+            pandorothy_orderList.push(inputOrder)
+        }
+        res.status(200).end();
+    }
+})
+
+app.get('/getOrder', (req, res) => { // myPage에서 내 주문 현황 확인
+    let ret=[]
+    let user=req.body.student_number;
+    let user_idx=orderList.indexOf(user);
+    user_idx.forEach(ord=>{
+
+    })
+    res.send(blueportMenu);
+})
+
+app.get('/blueportOrder', (req, res) => {
+    res.send(JSON.stringify(blue_orderList));
+})  
+
+app.get('/blueportMenu', (req, res) => {
+    res.send(JSON.stringify(blueportMenu));
+})  
+
+app.get('/cafenamuMenu', (req, res) => {
+    res.send(JSON.stringify(cafenamuMenu));
+})
+
+app.get('/pandorothyMenu', (req, res) => {
+    res.send(JSON.stringify(pandorothyMenu));
+})
+
+app.post('/getCost', (req, res) => {
+    let targetmarket=parseInt(req.body.market);
+    let result=0
+    if (targetmarket===1){
+        for (let i=0;i<cafenamuMenu.length; i++)
+        {
+            result+=req.body.price[i]*cafenamuMenu[i][2];
+        }
+    }
+    else if(targetmarket===2){
+        for (let i=0;i<blueportMenu.length; i++)
+        {
+            result+=req.body.price[i]*blueportMenu[i][2];
+        }
+    }
+    else{
+        for (let i=0;i<pandorothyMenu.length; i++)
+        {
+            result+=req.body.price[i]*pandorothyMenu[i][2];
+        }
+    }
+    console.log(result);
+    res.status(200).send(result.toString());
+})
+
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 
@@ -88,5 +167,31 @@ app.listen(port, () => {
     newUser.banned=0;//banned 0 normal, 1 advise(alert to manager), 2 banned (can't login)
     userInfo.push(newUser);
 
+    
+    /*
+    json 변환해서 카페 메뉴 정보를 폴더에 넣은 뒤 불러와서 array에 넣어주는 작업
+    */
+    fs.readFile('./public/json/blueport.json', (err, data) => {  
+        if (err) throw err
+        temp=JSON.parse(data)
+        temp.forEach((item)=>{
+            blueportMenu.push([item.mId,item.name,parseInt(item.price)])
+        });
+    });
+
+    fs.readFile('./public/json/cafenamu.json', (err, data) => {
+        if (err) throw err
+        temp=JSON.parse(data)
+        temp.forEach((item)=>{
+            cafenamuMenu.push([item.mId,item.name,parseInt(item.price)])
+        });
+    });
+    fs.readFile('./public/json/pandorothy.json', (err, data) => {
+        if (err) throw err
+        temp=JSON.parse(data);
+        temp.forEach((item)=>{
+            pandorothyMenu.push([item.mId,item.name,parseInt(item.price)])
+        }); 
+    });
 
 })
