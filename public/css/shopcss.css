@@ -1,0 +1,101 @@
+.menubar{
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:5%;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #333;
+}
+
+.product-list{
+    width: 900px;
+    height: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.product{
+    display: block;
+    width: 700px;
+    height: 200px;
+    text-decoration:none;
+    color: black;
+    float:left;
+    margin-left: 30px;
+    margin-right: 10px;
+    margin-bottom: 30px;
+    margin-top: 15px;
+}
+
+.product-info{
+    margin-left: 50px;
+}
+
+.images{
+    border-radius: 10px 10px;
+}
+
+.product-name{
+    margin-top: 20px;
+}
+
+.product-price{
+    margin-top: 50px;
+    padding-right: 10%;
+}
+
+.cnt-wrap{
+    margin-top:auto;
+    margin-bottom:auto;
+    margin-left: auto;
+}
+.cnt-wrap > button {
+    background: #ddd;
+    color: #000;
+    width: 38px;
+    height: 38px;
+    top: 0;
+    font-size: 20px;
+    border-radius: 2px;
+    border-width: 0.5px;/*상하좌우*/
+}
+.cnt-wrap > input {
+    width:50px; 
+    height: 38px; 
+    text-align: center;
+}
+
+.total_price {
+    margin-top:15px;
+    padding-top: 25px;
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 3px solid gainsboro;
+    text-align: right;
+}
+
+.price {
+    margin-left: auto;
+    padding-right: 20px;
+}
+
+.total {
+    padding-right: 5px;
+}
+
+.won {
+    margin-right: 30px;
+}
+
+.order{
+    width: 900px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.order > button {
+    margin-top:10px;
+    margin-right:20px;
+}
