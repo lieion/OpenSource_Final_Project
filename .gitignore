@@ -140,6 +140,7 @@ dist
 
 ### VisualStudioCode ###
 .vscode/*
+public/.vscode/*
 
 # Local History for Visual Studio Code
 .history/
