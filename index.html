@@ -137,11 +137,11 @@
                 signUpPart.disabled=false;
                 /*log - in btn이 클릭되면 login html로 이동한다*/              
                 login_button.addEventListener("click",()=>{
-                    location.href="./process/login.html"
+                    location.href="./public/login.html"
                 });
                 /*sign up btn이 클릭되면 sign-up html로 이동한다*/            
                 signup_btn.addEventListener("click",()=>{
-                    location.href="./process/sign-up.html"
+                    location.href="./public/sign-up.html"
                 });
                 welcome_mention.innerText='Welcome To SKAFE';
             }
@@ -153,11 +153,11 @@
                 /*log - in btn이 클릭되면 login html로 이동한다*/
                 login_button.addEventListener("click",()=>{
                     localStorage.setItem('id','0');
-                    location.href="./"
+                    location.href="./public/login.html"
                 });
                 /*sign up btn이 클릭되면 sign-up html로 이동한다*/
                 signup_btn.addEventListener("click",()=>{
-                    location.href="./process/sign-up.html"
+                    location.href="./public/sign-up.html"
                 });
 
                 //유저에 따라서 welcome 인사를 다르게 설정
