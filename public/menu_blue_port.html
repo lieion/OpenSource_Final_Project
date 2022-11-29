@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -70,7 +71,7 @@
                 </div>
 
                 <div class="text-end position-relative top-0 start-50">
-                    <button type="button" class="btn btn-outline-light me-2" id="login">Login</button>
+                    <button type="button" class="btn btn-outline-light me-2" id="login" disabled>Login</button>
                     <button type="button" class="btn btn-warning" id="sign-up">Sign-up</button>
                 </div>
                 
@@ -82,7 +83,7 @@
         </h1>
         <div class="product-list container col-xl-10 col-xxl-8 px-4 py-5">
             <a class="d-flex product">
-                <img src="./img/ice_americano.jfif" width="180" height="180" class="images">
+                <img src="./img/ice_americano.jpg" width="180" height="180" class="images">
                 <div class="product-info"> 
                     <h3 class="product-name">
                         [ICE] Americano
@@ -92,9 +93,9 @@
                     </h4>
                 </div>
                 <div class="d-flex cnt-wrap">
-                    <button type="button" class="minus" id="btn1_min"><i class="bi bi-dash"></i></button>
-                    <input type="text" class="input" value="0" id="btn1_input" readonly>
-                    <button type="button" class="plus" id="btn1_plus"><i class="bi bi-plus"></i></button>
+                    <button type="button" class="minus" id = "btn1minus"><i class="bi bi-dash"></i></button>
+                    <input type="text" class="input" id = "input1" value="0" readonly>
+                    <button type="button" class="plus" id = "btn1plus"><i class="bi bi-plus"></i></button>
                 </div>
             </a>
 
@@ -109,9 +110,9 @@
                     </h4>
                 </div>
                 <div class="d-flex cnt-wrap">
-                    <button type="button" class="minus" id="btn2_min"><i class="bi bi-dash"></i></button>
-                    <input type="text" class="input" value="0" id="btn2_input" readonly>
-                    <button type="button" class="plus" id="btn2_plus"><i class="bi bi-plus"></i></button>
+                    <button type="button" class="minus" id = "btn2minus"><i class="bi bi-dash"></i></button>
+                    <input type="text" class="input" id = "input2" value="0" readonly>
+                    <button type="button" class="plus" id = "btn2plus"><i class="bi bi-plus"></i></button>
                 </div>
             </a>
 
@@ -126,9 +127,9 @@
                     </h4>
                 </div>
                 <div class="d-flex cnt-wrap">
-                    <button type="button" class="minus" id="btn3_min"><i class="bi bi-dash"></i></button>
-                    <input type="text" class="input" value="0" id="btn3_input" readonly>
-                    <button type="button" class="plus" id="btn3_plus"><i class="bi bi-plus"></i></button>
+                    <button type="button" class="minus" id = "btn3minus"><i class="bi bi-dash"></i></button>
+                    <input type="text" class="input" id = "input3" value="0" readonly>
+                    <button type="button" class="plus" id = "btn3plus"><i class="bi bi-plus"></i></button>
                 </div>
             </a>
 
@@ -143,9 +144,9 @@
                     </h4>
                 </div>
                 <div class="d-flex cnt-wrap">
-                    <button type="button" class="minus" id="btn4_min"><i class="bi bi-dash"></i></button>
-                    <input type="text" class="input" value="0" id="btn4_input" readonly>
-                    <button type="button" class="plus" id="btn4_plus"><i class="bi bi-plus"></i></button>
+                    <button type="button" class="minus" id = "btn4minus"><i class="bi bi-dash"></i></button>
+                    <input type="text" class="input" id = "input4" value="0" readonly>
+                    <button type="button" class="plus" id = "btn4plus"><i class="bi bi-plus"></i></button>
                 </div>
             </a>
 
@@ -160,9 +161,9 @@
                     </h4>
                 </div>
                 <div class="d-flex cnt-wrap">
-                    <button type="button" class="minus" id="btn5_min"><i class="bi bi-dash"></i></button>
-                    <input type="text" class="input" value="0" id="btn5_input" readonly>
-                    <button type="button" class="plus" id="btn5_plus"><i class="bi bi-plus"></i></button>
+                    <button type="button" class="minus" id = "btn5minus"><i class="bi bi-dash"></i></button>
+                    <input type="text" class="input" id = "input5" value="0" readonly>
+                    <button type="button" class="plus" id = "btn5plus"><i class="bi bi-plus"></i></button>
                 </div>
             </a>
 
@@ -177,237 +178,200 @@
                     </h4>
                 </div>
                 <div class="d-flex cnt-wrap">
-                    <button type="button" class="minus" id="btn6_min"><i class="bi bi-dash"></i></button>
-                    <input type="text" class="input" value="0" id="btn6_input" readonly>
-                    <button type="button" class="plus" id="btn6_plus"><i class="bi bi-plus"></i></button>
+                    <button type="button" class="minus" id = "btn6minus"><i class="bi bi-dash"></i></button>
+                    <input type="text" class="input" id = "input6" value="0" readonly>
+                    <button type="button" class="plus" id = "btn6plus"><i class="bi bi-plus"></i></button>
                 </div>
             </a>
         </div>
         <div class="d-flex total_price">
             <h4 class="price">Total: </h4>
-            <h4 class="total" id="totalcost">0</h4>
+            <h4 class="total" id = "totalprice">0</h4>
             <h4 class="won">won</h4>
         </div>
         <div class="order">
-            <button type="button" class="btn btn-lg btn-success" style="float: right;" id="orderBtn">Order</button>
+            <button type="button" class="btn btn-lg btn-success" id="orderbutton" style="float: right;">Order</button>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"crossorigin="anonymous">
         </script>
         <script>/*JSCode*/
-            //세션에 암호화하고 하는 로그인 설정 대신 로컬스토리지로 로그인 상태 대체
+            /* 로컬로 부터 현재 접속되어있는 id를 물어본다 */
             let tsk=localStorage.getItem('id');
             console.log(tsk)
-            let login_state=0
-            let loginBtnPart=document.getElementById('login');
-            let signUpPart=document.getElementById('sign-up');
-            let login_button=document.querySelector("#login");
-            let signup_btn=document.querySelector("#sign-up");
-            let order_btn=document.getElementById('orderBtn');
-
-            let btn1_min=document.getElementById('btn1_min');
-            let btn1_input=document.getElementById('btn1_input');
-            let btn1_plus=document.getElementById('btn1_plus');
-            let btn2_min=document.getElementById('btn2_min');
-            let btn2_input=document.getElementById('btn2_input');
-            let btn2_plus=document.getElementById('btn2_plus');
-            let btn3_min=document.getElementById('btn3_min');
-            let btn3_input=document.getElementById('btn3_input');
-            let btn3_plus=document.getElementById('btn3_plus');
-            let btn4_min=document.getElementById('btn4_min');
-            let btn4_input=document.getElementById('btn4_input');
-            let btn4_plus=document.getElementById('btn4_plus');
-            let btn5_min=document.getElementById('btn5_min');
-            let btn5_input=document.getElementById('btn5_input');
-            let btn5_plus=document.getElementById('btn5_plus');
-            let btn6_min=document.getElementById('btn6_min');
-            let btn6_input=document.getElementById('btn6_input');
-            let btn6_plus=document.getElementById('btn6_plus');
-            let totalcost=document.getElementById('totalcost');
-            let cal_cost=0
-
-
-            function fetching_cost(){
-                $.ajax({
-                    type: "POST",
-                    url: "http://localhost:3000/getCost",
-                    data: {
-                        market: 2,
-                        price: [btn1_input.value,btn2_input.value,btn3_input.value,btn4_input.value,btn5_input.value,btn6_input.value]
-                    },
-                    success: function (data) {
-                        console.log(data);
-                        cal_cost=data;
-                        totalcost.innerText=cal_cost.toString();
-
-                    },
-                    error: function (request, status, error) {
-                        console.log("ERROR");
-                    }
-                });
-            }
-     
             /*log - in btn이 클릭되면 login html로 이동한다*/
-            if (tsk===undefined || tsk==="0" || tsk===null)
-            {
-                login_state=0;
-                loginBtnPart.innerText = 'Login';            
-                signUpPart.disabled=false;
-                /*log - in btn이 클릭되면 login html로 이동한다*/              
-                login_button.addEventListener("click",()=>{
-                    location.href="./login.html"
-                });
-                /*sign up btn이 클릭되면 sign-up html로 이동한다*/            
-                signup_btn.addEventListener("click",()=>{
-                    location.href="./sign-up.html"
-                });
-                order_btn.addEventListener("click",()=>{
-                    alert("로그인을 하셔야 주문할 수 있습니다");
-                });
+            let login_button=document.querySelector("#login");
+            login_button.addEventListener("click",()=>{
+                location.href="./login.html"
+            });
+
+            /*sign up btn이 클릭되면 sign-up html로 이동한다*/
+            let signup_btn=document.querySelector("#sign-up");
+            signup_btn.addEventListener("click",()=>{
+                location.href="./sign-up.html"
+            });
+
+            // Blue port의 메뉴 리스트 (key: 메뉴명, value: 가격)
+            let menu = {
+                "[ICE] Americano": 2000,
+                "[ICE] Latte": 3500,
+                "[HOT] Latte": 3000,
+                "[ICE] Ice Choco": 3000,
+                "[ICE] Mango Smoothie": 4000,
+                "[ICE] Greentea Latte": 3500
             }
-            else
-            {
-                login_state=1;
-                loginBtnPart.innerText = 'Log-Out';
-                signUpPart.innerText = 'My Page';
-                /*log - in btn이 클릭되면 login html로 이동한다*/
-                login_button.addEventListener("click",()=>{
-                    localStorage.setItem('id','0');
-                    location.href="../index.html"
-                });
-                /*sign up btn이 클릭되면 sign-up html로 이동한다*/
-                signup_btn.addEventListener("click",()=>{
-                    location.href="./myPage.html"
-                });
-                order_btn.addEventListener("click",()=>{
-                    alert("주문");
-                    $.ajax({
+
+            // 각 메뉴별 주문량
+            let order_list = [0, 0, 0, 0, 0, 0];
+
+            // 총 주문 금액 계산한 뒤, HTML의 total price부분을 update
+            function calculate_total(){
+                let sum = 0;
+                for(var i = 0; i < 6; i++){
+                    sum += order_list[i] * Object.values(menu)[i];
+                }
+                let outputsum = sum.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","); // 정규표현식으로 1000단위마다 ,를 찍도록
+                document.querySelector("#totalprice").innerText = outputsum;
+            }
+
+            // 각 메뉴의 +버튼 눌렀을 때
+            let addbutton1 = document.querySelector("#btn1plus");
+            addbutton1.addEventListener("click", () => {
+                document.querySelector("#input1").value = parseInt(document.querySelector("#input1").value) + 1;
+                order_list[0]++;
+                calculate_total();
+            });
+            let addbutton2 = document.querySelector("#btn2plus");
+            addbutton2.addEventListener("click", () => {
+                document.querySelector("#input2").value = parseInt(document.querySelector("#input2").value) + 1;
+                order_list[1]++;
+                calculate_total();
+            });
+            let addbutton3 = document.querySelector("#btn3plus");
+            addbutton3.addEventListener("click", () => {
+                document.querySelector("#input3").value = parseInt(document.querySelector("#input3").value) + 1;
+                order_list[2]++;
+                calculate_total();
+            });
+            let addbutton4 = document.querySelector("#btn4plus");
+            addbutton4.addEventListener("click", () => {
+                document.querySelector("#input4").value = parseInt(document.querySelector("#input4").value) + 1;
+                order_list[3]++;
+                calculate_total();
+            });
+            let addbutton5 = document.querySelector("#btn5plus");
+            addbutton5.addEventListener("click", () => {
+                document.querySelector("#input5").value = parseInt(document.querySelector("#input5").value) + 1;
+                order_list[4]++;
+                calculate_total();
+            });
+            let addbutton6 = document.querySelector("#btn6plus");
+            addbutton6.addEventListener("click", () => {
+                document.querySelector("#input6").value = parseInt(document.querySelector("#input6").value) + 1;
+                order_list[5]++;
+                calculate_total();
+            });
+
+            // 각 메뉴의 -버튼 눌렀을 때
+            let minusbutton1 = document.querySelector("#btn1minus");
+            minusbutton1.addEventListener("click", () => {
+                let curval = document.querySelector("#input1").value;
+                curval--;
+                document.querySelector("#input1").value = curval < 0 ? 0 : curval;
+                order_list[0] = curval;
+                calculate_total();
+            });
+            let minusbutton2 = document.querySelector("#btn2minus");
+            minusbutton2.addEventListener("click", () => {
+                let curval = document.querySelector("#input2").value;
+                curval--;
+                document.querySelector("#input2").value = curval < 0 ? 0 : curval;
+                order_list[1] = curval;
+                calculate_total();
+            });
+            let minusbutton3 = document.querySelector("#btn3minus");
+            minusbutton3.addEventListener("click", () => {
+                let curval = document.querySelector("#input3").value;
+                curval--;
+                document.querySelector("#input3").value = curval < 0 ? 0 : curval;
+                order_list[2] = curval;
+                calculate_total();
+            });
+            let minusbutton4 = document.querySelector("#btn4minus");
+            minusbutton4.addEventListener("click", () => {
+                let curval = document.querySelector("#input4").value;
+                curval--;
+                document.querySelector("#input4").value = curval < 0 ? 0 : curval;
+                order_list[3] = curval;
+                calculate_total();
+            });
+            let minusbutton5 = document.querySelector("#btn5minus");
+            minusbutton5.addEventListener("click", () => {
+                let curval = document.querySelector("#input5").value;
+                curval--;
+                document.querySelector("#input5").value = curval < 0 ? 0 : curval;
+                order_list[4] = curval;
+                calculate_total();
+            });
+            let minusbutton6 = document.querySelector("#btn6minus");
+            minusbutton6.addEventListener("click", () => {
+                let curval = document.querySelector("#input6").value;
+                curval--;
+                document.querySelector("#input6").value = curval < 0 ? 0 : curval;
+                order_list[5] = curval;
+                calculate_total();
+            });
+
+            
+            // order button을 눌렀을 때
+            let orderbutton = document.querySelector("#orderbutton");
+            orderbutton.addEventListener("click", () => {
+                let total_price = 0;
+                let menu_name = Object.keys(menu);
+                let menu_price = Object.values(menu);
+                for(var i = 0; i < 6; i++){
+                    total_price += order_list[i] * menu_price[i];
+                }
+                console.log(total_price)
+                $.ajax({
                     type: "POST",
                     url: "http://localhost:3000/order",
                     data: {
                         student_number: tsk,
                         market: 2,
-                        total: cal_cost,
-                        price: [btn1_input.value,btn2_input.value,btn3_input.value,btn4_input.value,btn5_input.value,btn6_input.value]
+                        total: total_price,
+                        menu: menu_name,
+                        price: order_list,
+                        menu_price: menu_price
                     },
                     success: function (data) {
                         alert("주문 완료");
                         console.log(data);
                         window.location.href="./myPage.html"
+
+                        /* myPage에서 뒤로 가기 눌렀을 때 value 값과 total관련 맞지 않는 문제 발견 -> 0으로 초기화*/
+                        document.querySelector("#input1").value=0;
+                        document.querySelector("#input2").value=0;
+                        document.querySelector("#input3").value=0;
+                        document.querySelector("#input4").value=0;
+                        document.querySelector("#input5").value=0;
+                        document.querySelector("#input6").value=0;
                     },
                     error: function (request, status, error) {
                         if (request.status===400) alert("주문이 비어있습니다")
                         else alert("주문 실패");
                     }
                     });
-                });
-            }
 
-            //버튼을 누를 때 마다 서버로 그 정보를 보내 가격을 요청한다.
-            btn1_min.addEventListener("click",()=>{
-                let input_number=btn1_input.value;
-                input_number=parseInt(input_number)-1;
-                if(input_number>-1) btn1_input.value=input_number
-                fetching_cost();
-            });
-            btn2_min.addEventListener("click",()=>{
-                let input_number=btn2_input.value;
-                input_number=parseInt(input_number)-1;
-                if(input_number>-1) btn2_input.value=input_number
-                fetching_cost()
-            });
-            btn3_min.addEventListener("click",()=>{
-                let input_number=btn3_input.value;
-                input_number=parseInt(input_number)-1;
-                if(input_number>-1) btn3_input.value=input_number
-                fetching_cost()
-            });
-            btn4_min.addEventListener("click",()=>{
-                let input_number=btn4_input.value;
-                input_number=parseInt(input_number)-1;
-                if(input_number>-1) btn4_input.value=input_number
-                fetching_cost()
-            });
-            btn5_min.addEventListener("click",()=>{
-                let input_number=btn5_input.value;
-                input_number=parseInt(input_number)-1;
-                if(input_number>-1) btn5_input.value=input_number
-                fetching_cost()
-            });
-            btn6_min.addEventListener("click",()=>{
-                let input_number=btn6_input.value;
-                input_number=parseInt(input_number)-1;
-                if(input_number>-1) btn6_input.value=input_number
-                fetching_cost()
-            });
-            btn1_plus.addEventListener("click",()=>{
-                let input_number=btn1_input.value;
-                input_number=parseInt(input_number)+1;
-                if (input_number<11){
-                    btn1_input.value=input_number
-                }
-                else{
-                    alert("같은 메뉴는 최대 10개까지 주문할 수 있습니다");
-                }
-                fetching_cost()
-            });
-            btn2_plus.addEventListener("click",()=>{
-                let input_number=btn2_input.value;
-                input_number=parseInt(input_number)+1;
-                if (input_number<11){
-                    btn2_input.value=input_number
-                }
-                else{
-                    alert("같은 메뉴는 최대 10개까지 주문할 수 있습니다");
-                }
-                fetching_cost()
-            });
-            btn3_plus.addEventListener("click",()=>{
-                let input_number=btn3_input.value;
-                input_number=parseInt(input_number)+1;
-                if (input_number<11){
-                    btn3_input.value=input_number
-                }
-                else{
-                    alert("같은 메뉴는 최대 10개까지 주문할 수 있습니다");
-                }
-                fetching_cost()
-            });
-            btn4_plus.addEventListener("click",()=>{
-                let input_number=btn4_input.value;
-                input_number=parseInt(input_number)+1;
-                if (input_number<11){
-                    btn4_input.value=input_number
-                }
-                else{
-                    alert("같은 메뉴는 최대 10개까지 주문할 수 있습니다");
-                }
-                fetching_cost()
-            });
-            btn5_plus.addEventListener("click",()=>{
-                let input_number=btn5_input.value;
-                input_number=parseInt(input_number)+1;
-                if (input_number<11){
-                    btn5_input.value=input_number
-                }
-                else{
-                    alert("같은 메뉴는 최대 10개까지 주문할 수 있습니다");
-                }
-                fetching_cost()
-            });
-            btn6_plus.addEventListener("click",()=>{
-                let input_number=btn6_input.value;
-                input_number=parseInt(input_number)+1;
-                if (input_number<11){
-                    btn6_input.value=input_number
-                }
-                else{
-                    alert("같은 메뉴는 최대 10개까지 주문할 수 있습니다");
-                }
-                fetching_cost()
-            });
 
-            
-            
+
+                /* Todo
+                1. total_price에 주문한 총 금액이 저장되어 있습니다.
+                2. order_list에 각 상품의 주문량이 저장되어 있습니다. ex) order_list[0] -> 첫번째 상품(아이스 아메리카노) 주문 개수
+                3. menu_name에 각 상품의 이름이 저장되어 있습니다. ex) menu_name[0] -> "[ICE] Americano" (string)
+                4. menu_price에 각 상품의 가격이 저장되어 있습니다. ex) menu_price[0] -> 2000 (int)
+                */
+            })
+
         </script>
     </body>
 </html>

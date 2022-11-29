@@ -82,8 +82,10 @@ app.post('/order',(req,res)=>{ //주문
     inputOrder.user=req.body.student_number;
     inputOrder.market=parseInt(req.body.market);
     inputOrder.order=req.body.price;
+    inputOrder.menu_price=req.body.menu_price;
     inputOrder.order_time=new Date();
     inputOrder.order_price=parseInt(req.body.total)
+    inputOrder.order_menu=req.body.menu;
     if(inputOrder.order_price===0 || req.body.student_number===""){
         res.status(400).end()
     }
@@ -93,7 +95,7 @@ app.post('/order',(req,res)=>{ //주문
             
             blue_orderList.push(inputOrder)
         }
-        else if(market===1){
+        else if(inputOrder.market===1){
             namu_orderList.push(inputOrder)
         }
         else{
@@ -111,17 +113,14 @@ app.post('/blueportOrder', (req, res) => {
     let ret=[];
     let retno=1;
     let menu=[];
-    for (let i=0;i<blueportMenu.length; i++)
-    {
-        menu.push(blueportMenu[i][1]);
-    }
     blue_orderList.forEach(ord=>{
         if(ord.user===sid){
             let result=0;
             let tempObj=new Object();
             tempObj.no=retno;
             retno+=1;
-            tempObj.menu=menu;
+            tempObj.menu=ord.order_menu;
+            tempObj.menu_price=ord.menu_price;
             tempObj.order=ord.order;
             for (let i=0;i<blueportMenu.length; i++)
             {
@@ -133,8 +132,67 @@ app.post('/blueportOrder', (req, res) => {
         }
     })
     res.send(JSON.stringify(ret));
-})  
+})
 
+
+//cafe namu에 대해서 주문 정보를 보내준다.
+app.post('/cafeNamuOrder', (req, res) => {
+    console.log(req.body)
+    let sid=req.body.id;
+    let ret=[];
+    let retno=1;
+    let menu=[];
+    namu_orderList.forEach(ord=>{
+        if(ord.user===sid){
+            let result=0;
+            let tempObj=new Object();
+            tempObj.no=retno;
+            retno+=1;
+            tempObj.menu=ord.order_menu;
+            tempObj.menu_price=ord.menu_price;
+            tempObj.order=ord.order;
+            for (let i=0;i<blueportMenu.length; i++)
+            {
+                result+=ord.order[i]*cafenamuMenu[i][2];
+            }
+            tempObj.order_price=result
+            tempObj.orderStatus=ord.isDone;
+            ret.push(tempObj);
+        }
+    })
+    res.send(JSON.stringify(ret));
+})
+
+//pandorothy에 대해서 주문 정보를 보내준다.
+app.post('/pandorothyOrder', (req, res) => {
+    console.log(req.body)
+    let sid=req.body.id;
+    let ret=[];
+    let retno=1;
+    let menu=[];
+    pandorothy_orderList.forEach(ord=>{
+        if(ord.user===sid){
+            let result=0;
+            let tempObj=new Object();
+            tempObj.no=retno;
+            retno+=1;
+            tempObj.menu=ord.order_menu;
+            tempObj.menu_price=ord.menu_price;
+            tempObj.order=ord.order;
+            for (let i=0;i<blueportMenu.length; i++)
+            {
+                result+=ord.order[i]*pandorothyMenu[i][2];
+            }
+            tempObj.order_price=result
+            tempObj.orderStatus=ord.isDone;
+            ret.push(tempObj);
+        }
+    })
+    res.send(JSON.stringify(ret));
+})
+
+
+/* 개발용 */
 app.get('/blueportMenu', (req, res) => {
     res.send(JSON.stringify(blueportMenu));
 })  
@@ -147,29 +205,16 @@ app.get('/pandorothyMenu', (req, res) => {
     res.send(JSON.stringify(pandorothyMenu));
 })
 
-app.post('/getCost', (req, res) => { //요청한 가격을 계산해서 보내준다
-    let targetmarket=parseInt(req.body.market);
-    let result=0
-    if (targetmarket===1){
-        for (let i=0;i<cafenamuMenu.length; i++)
-        {
-            result+=req.body.price[i]*cafenamuMenu[i][2];
-        }
-    }
-    else if(targetmarket===2){
-        for (let i=0;i<blueportMenu.length; i++)
-        {
-            result+=req.body.price[i]*blueportMenu[i][2];
-        }
-    }
-    else{
-        for (let i=0;i<pandorothyMenu.length; i++)
-        {
-            result+=req.body.price[i]*pandorothyMenu[i][2];
-        }
-    }
-    console.log(result);
-    res.status(200).send(result.toString());
+app.get('/blueportOrder', (req, res) => {
+    res.send(JSON.stringify(blue_orderList));
+})  
+
+app.get('/cafenamuOrder', (req, res) => {
+    res.send(JSON.stringify(namu_orderList));
+})
+
+app.get('/pandorothyOrder', (req, res) => {
+    res.send(JSON.stringify(pandorothy_orderList));
 })
 
 

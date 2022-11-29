@@ -85,134 +85,17 @@
       
             <h3>Cafe Namu</h3>
             <div class="table-responsive">
-              <table class="table table-striped table-sm">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Menu</th>
-                    <th scope="col">Count</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">State</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td rowspan="6">1</td>
-                    <td>random</td>
-                    <td>data</td>
-                    <td rowspan="6">placeholder</td>
-                    <td rowspan="6">text</td>
-                  </tr>
-                  <tr>
-                    <td>placeholder</td>
-                    <td>irrelevant</td>
-                  </tr>
-                  <tr>
-                    <td>data</td>
-                    <td>rich</td>
-                  </tr>
-                  <tr>
-                    <td>information</td>
-                    <td>placeholder</td>
-                  </tr>
-                  <tr>
-                    <td>text</td>
-                    <td>random</td>
-                  </tr>
-                  <tr>
-                    <td>dashboard</td>
-                    <td>irrelevant</td>
-                  </tr>
-                </tbody>
-              </table>
+              <table class="table table-striped table-sm" id="namutable"></table>
             </div>
 
             <h3>Blue_Port</h3>
             <div class="table-responsive">
-              <table class="table table-striped table-sm" id="bluetable">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Menu</th>
-                    <th scope="col">Count</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">State</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td rowspan="6">1</td>
-                    <td>random</td>
-                    <td>data</td>
-                    <td rowspan="6">placeholder</td>
-                    <td rowspan="6">text</td>
-                  </tr>
-                  <tr>
-                    <td>placeholder</td>
-                    <td>irrelevant</td>
-                  </tr>
-                  <tr>
-                    <td>data</td>
-                    <td>rich</td>
-                  </tr>
-                  <tr>
-                    <td>information</td>
-                    <td>placeholder</td>
-                  </tr>
-                  <tr>
-                    <td>text</td>
-                    <td>random</td>
-                  </tr>
-                  <tr>
-                    <td>dashboard</td>
-                    <td>irrelevant</td>
-                  </tr>
-                </tbody>
-              </table>
+              <table class="table table-striped table-sm" id="bluetable"></table>
             </div>
 
             <h3>Pandorothy</h3>
             <div class="table-responsive">
-              <table class="table table-striped table-sm">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Menu</th>
-                    <th scope="col">Count</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">State</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td rowspan="6">1</td>
-                    <td>random</td>
-                    <td>data</td>
-                    <td rowspan="6">placeholder</td>
-                    <td rowspan="6">text</td>
-                  </tr>
-                  <tr>
-                    <td>placeholder</td>
-                    <td>irrelevant</td>
-                  </tr>
-                  <tr>
-                    <td>data</td>
-                    <td>rich</td>
-                  </tr>
-                  <tr>
-                    <td>information</td>
-                    <td>placeholder</td>
-                  </tr>
-                  <tr>
-                    <td>text</td>
-                    <td>random</td>
-                  </tr>
-                  <tr>
-                    <td>dashboard</td>
-                    <td>irrelevant</td>
-                  </tr>
-                </tbody>
-              </table>
+              <table class="table table-striped table-sm" id="pandorothytable"></table>
             </div>
           </main>
 
@@ -275,9 +158,47 @@
                 
             }
 
+            //cafe namu 관련해서 Post로 id에 맞는 주문 정보를 받고 표를 그린다.
+            let namutable=document.getElementById('namutable');
+            let namutableHTML="<thead><tr><th scope=\"col\">#</th><th scope=\"col\">Menu</th><th scope=\"col\">Count</th><th scope=\"col\">Price</th><th scope=\"col\">State</th></tr></thead>";
+            $.ajax({
+                    type: "POST",
+                    url: "http://localhost:3000/cafeNamuOrder",
+                    data: {
+                        id: tsk
+                    },
+                    success: function (data) {
+                        let jsondata=JSON.parse(data);
+                        console.log(jsondata)
+                        jsondata.forEach(n=>{
+                            namutableHTML+="<tbody>";
+                            namutableHTML+="<tr>";
+                            namutableHTML+="<td rowspan=\"6\">"+n.no+"</td>";
+                            namutableHTML+="<td>"+n.menu[0]+"</td>";
+                            namutableHTML+="<td>"+n.order[0]+"</td>";
+                            namutableHTML+="<td rowspan=\"6\">"+n.order_price+"</td>";
+                            if (n.orderStatus==0) namutableHTML+="<td rowspan=\"6\">"+"제조 중"+"</td>";
+                            else namutableHTML+="<td rowspan=\"6\">"+"완료"+"</td>";
+                            namutableHTML+="</tr>";
+                            for(let i=1; i<6; i++){
+                                namutableHTML+="<tr>";
+                                namutableHTML+="<td>"+n.menu[i]+"</td>";
+                                namutableHTML+="<td>"+n.order[i]+"</td>";
+                                namutableHTML+="</tr>";
+                            }
+                            namutableHTML+="</tbody>";
+                        })
+                        namutable.innerHTML=namutableHTML;
+                    },
+                    error: function (request, status, error) {
+                        console.log("ERROR");
+                    }
+            });
+
+
             //blue table 관련해서 Post로 id에 맞는 주문 정보를 받고 표를 그린다.
             let bluetable=document.getElementById('bluetable');
-            let bluetalbeHTML="<thead><tr><th scope=\"col\">#</th><th scope=\"col\">Menu</th><th scope=\"col\">Count</th><th scope=\"col\">Price</th><th scope=\"col\">State</th></tr></thead>";
+            let bluetableHTML="<thead><tr><th scope=\"col\">#</th><th scope=\"col\">Menu</th><th scope=\"col\">Count</th><th scope=\"col\">Price</th><th scope=\"col\">State</th></tr></thead>";
             $.ajax({
                     type: "POST",
                     url: "http://localhost:3000/blueportOrder",
@@ -288,24 +209,61 @@
                         let jsondata=JSON.parse(data);
                         console.log(jsondata)
                         jsondata.forEach(n=>{
-                            bluetalbeHTML+="<tbody>";
-                            bluetalbeHTML+="<tr>";
-                            bluetalbeHTML+="<td rowspan=\"6\">"+n.no+"</td>";
-                            bluetalbeHTML+="<td>"+n.menu[0]+"</td>";
-                            bluetalbeHTML+="<td>"+n.order[0]+"</td>";
-                            bluetalbeHTML+="<td rowspan=\"6\">"+n.order_price+"</td>";
-                            if (n.orderStatus==0) bluetalbeHTML+="<td rowspan=\"6\">"+"제조 중"+"</td>";
-                            else bluetalbeHTML+="<td rowspan=\"6\">"+"완료"+"</td>";
-                            bluetalbeHTML+="</tr>";
+                            bluetableHTML+="<tbody>";
+                            bluetableHTML+="<tr>";
+                            bluetableHTML+="<td rowspan=\"6\">"+n.no+"</td>";
+                            bluetableHTML+="<td>"+n.menu[0]+"</td>";
+                            bluetableHTML+="<td>"+n.order[0]+"</td>";
+                            bluetableHTML+="<td rowspan=\"6\">"+n.order_price+"</td>";
+                            if (n.orderStatus==0) bluetableHTML+="<td rowspan=\"6\">"+"제조 중"+"</td>";
+                            else bluetableHTML+="<td rowspan=\"6\">"+"완료"+"</td>";
+                            bluetableHTML+="</tr>";
                             for(let i=1; i<6; i++){
-                                bluetalbeHTML+="<tr>";
-                                bluetalbeHTML+="<td>"+n.menu[i]+"</td>";
-                                bluetalbeHTML+="<td>"+n.order[i]+"</td>";
-                                bluetalbeHTML+="</tr>";
+                                bluetableHTML+="<tr>";
+                                bluetableHTML+="<td>"+n.menu[i]+"</td>";
+                                bluetableHTML+="<td>"+n.order[i]+"</td>";
+                                bluetableHTML+="</tr>";
                             }
-                            bluetalbeHTML+="</tbody>";
+                            bluetableHTML+="</tbody>";
                         })
-                        bluetable.innerHTML=bluetalbeHTML;
+                        bluetable.innerHTML=bluetableHTML;
+                    },
+                    error: function (request, status, error) {
+                        console.log("ERROR");
+                    }
+            });
+            
+            //pandorothy table 관련해서 Post로 id에 맞는 주문 정보를 받고 표를 그린다.
+            let pandorothytable=document.getElementById('pandorothytable');
+            let pandorothytableHTML="<thead><tr><th scope=\"col\">#</th><th scope=\"col\">Menu</th><th scope=\"col\">Count</th><th scope=\"col\">Price</th><th scope=\"col\">State</th></tr></thead>";
+            $.ajax({
+                    type: "POST",
+                    url: "http://localhost:3000/pandorothyOrder",
+                    data: {
+                        id: tsk
+                    },
+                    success: function (data) {
+                        let jsondata=JSON.parse(data);
+                        console.log(jsondata)
+                        jsondata.forEach(n=>{
+                            pandorothytableHTML+="<tbody>";
+                            pandorothytableHTML+="<tr>";
+                            pandorothytableHTML+="<td rowspan=\"6\">"+n.no+"</td>";
+                            pandorothytableHTML+="<td>"+n.menu[0]+"</td>";
+                            pandorothytableHTML+="<td>"+n.order[0]+"</td>";
+                            pandorothytableHTML+="<td rowspan=\"6\">"+n.order_price+"</td>";
+                            if (n.orderStatus==0) pandorothytableHTML+="<td rowspan=\"6\">"+"제조 중"+"</td>";
+                            else pandorothytableHTML+="<td rowspan=\"6\">"+"완료"+"</td>";
+                            pandorothytableHTML+="</tr>";
+                            for(let i=1; i<6; i++){
+                                pandorothytableHTML+="<tr>";
+                                pandorothytableHTML+="<td>"+n.menu[i]+"</td>";
+                                pandorothytableHTML+="<td>"+n.order[i]+"</td>";
+                                pandorothytableHTML+="</tr>";
+                            }
+                            pandorothytableHTML+="</tbody>";
+                        })
+                        pandorothytable.innerHTML=pandorothytableHTML;
                     },
                     error: function (request, status, error) {
                         console.log("ERROR");
