@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="text-end position-relative top-0 start-50">
-                    <button type="button" class="btn btn-outline-light me-2" id="login" disabled>Login</button>
+                    <button type="button" class="btn btn-outline-light me-2" id="login">Login</button>
                     <button type="button" class="btn btn-warning" id="sign-up">Sign-up</button>
                 </div>
                 
@@ -178,25 +178,7 @@
             signup_btn.addEventListener("click",()=>{
                 location.href="./sign-up.html"
             });
-
-            //Post형식으로 temp_server에 form 정보를 보냄
-           function auth() {
-                let sublog = $('#needs-validation').serialize();
-                console.log("authclicked");
-                $.ajax({
-                    type: "POST",
-                    url: "http://localhost:3000/signup",
-                    data: sublog,
-                    //성공시 200, 실패시 400
-                    success: function (data) {
-                        alert("WELCOME");
-                        window.location.href="../index.html"
-                    },
-                    error: function (request, status, error) {
-                        alert("이미 등록된 학번입니다");
-                    }
-                });
-            };
+            
             //sign-up.html에서 선택한 유저 정보를 바탕으로 class_id 정보 생성
             let classquery = window.location.search;
             let classparam = new URLSearchParams(classquery);
@@ -214,6 +196,28 @@
             }
             //form의 분류(대상)정보에 넣어준다.
             $('input[name=classification]').attr('value',class_id);
+
+            //Post형식으로 temp_server에 form 정보를 보냄
+           function auth() {
+                //namu 9000000000~9099999999 blueport 9100000000~9199999999 pandorothy 9200000000~9299999999
+                let sublog = $('#needs-validation').serialize();
+                console.log("authclicked");
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:3000/signup",
+                    data: sublog,
+                    //성공시 200, 실패시 400
+                    success: function (data) {
+                        alert("WELCOME");
+                        window.location.href="../index.html"
+                    },
+                    error: function (request, status, error) {
+                        alert("이미 등록된 학번입니다");
+                    }
+                });
+            };
+            
+            
 
             //form submit할 때 새로고침 되지 않도록 설정
             (() => {

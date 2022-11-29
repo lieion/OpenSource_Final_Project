@@ -53,7 +53,9 @@ app.post('/signup', (req, res) => {
 })
 
 app.post('/logins',(req,res)=>{
-    let state=0;
+    let ret=new Object();
+    ret.state=0;
+    ret.auth="";
     console.log("logins");
     console.log(req.body);
     //학번 존재 여부 확인
@@ -61,14 +63,15 @@ app.post('/logins',(req,res)=>{
         if(chat.student_number===req.body.student_number){
             //비밀번호 일치여부 확인
             if (chat.password===req.body.passw){
-                state=chat.student_number;
+                ret.state=chat.student_number;
+                ret.auth=chat.class;
             }
         }
     })
     //일치하는 경우
-    if(state!==0){
+    if(ret.state!==0){
         console.log("welcome")
-        res.status(200).send(state);
+        res.status(200).send(JSON.stringify(ret));
     }
     //일치하지 않는 경우
     else{

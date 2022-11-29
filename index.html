@@ -122,6 +122,7 @@
             //세션에 암호화하고 하는 로그인 설정 대신 로컬스토리지로 로그인 상태 대체
             let tsk=localStorage.getItem('id');
             console.log(tsk)
+            let classing=localStorage.getItem('auth');//education cafemanager engineer
             let login_state=0
             let loginBtnPart=document.getElementById('login');
             let signUpPart=document.getElementById('sign-up');
@@ -145,30 +146,64 @@
                 });
                 welcome_mention.innerText='Welcome To SKAFE';
             }
-            else
-            {
+            else if(classing==="cafemanager"){ // 카페 관리자의 경우
                 login_state=1;
                 loginBtnPart.innerText = 'Log-Out';
-                signUpPart.disabled=true;
+                signUpPart.innerText="Manager Page";
+                let mention_text="";
+                mention_text="Activating Manager Mode";
+                welcome_mention.innerText=mention_text;
+
                 /*log - in btn이 클릭되면 login html로 이동한다*/
                 login_button.addEventListener("click",()=>{
                     localStorage.setItem('id','0');
                     location.href="./public/login.html"
                 });
+
                 /*sign up btn이 클릭되면 sign-up html로 이동한다*/
                 signup_btn.addEventListener("click",()=>{
-                    location.href="./public/sign-up.html"
+                    location.href="./public/managerPage.html"
+                });
+            }
+            else if(classing==="engineer"){ // 엔지니어의 경우
+                login_state=1;
+                loginBtnPart.innerText = 'Log-Out';
+                signUpPart.innerText="Banning";
+                let mention_text="";
+                mention_text="Activating Manager Mode";
+                welcome_mention.innerText=mention_text;
+
+                /*log - in btn이 클릭되면 login html로 이동한다*/
+                login_button.addEventListener("click",()=>{
+                    localStorage.setItem('id','0');
+                    localStorage.setItem('auth',"");
+                    location.href="./public/login.html"
+                });
+
+                /*sign up btn이 클릭되면 sign-up html로 이동한다*/
+                signup_btn.addEventListener("click",()=>{
+                    location.href="./public/engineerPage.html"
+                });
+            }
+            else
+            {
+                login_state=1;
+                loginBtnPart.innerText = 'Log-Out';
+                signUpPart.innerText="My Page";
+                /*log - in btn이 클릭되면 login html로 이동한다*/
+                login_button.addEventListener("click",()=>{
+                    localStorage.setItem('id','0');
+                    localStorage.setItem('auth',"");
+                    location.href="./public/login.html"
+                });
+                /*sign up btn이 클릭되면 sign-up html로 이동한다*/
+                signup_btn.addEventListener("click",()=>{
+                    location.href="./public/myPage.html"
                 });
 
                 //유저에 따라서 welcome 인사를 다르게 설정
-                //관리자 0000000001번은 관리 모드 설정이라고 확인
                 let mention_text="";
-                if(tsk==="0000000001"){
-                    mention_text="Activating Manager Mode";
-                }
-                else {
-                    mention_text=`Welcome To SKAFE ${tsk}`;
-                }
+                mention_text=`Welcome To SKAFE ${tsk}`;
                 console.log(mention_text);
                 welcome_mention.innerText=mention_text;
             }
