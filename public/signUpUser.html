@@ -200,21 +200,49 @@
             //Post형식으로 temp_server에 form 정보를 보냄
            function auth() {
                 //namu 9000000000~9099999999 blueport 9100000000~9199999999 pandorothy 9200000000~9299999999
-                let sublog = $('#needs-validation').serialize();
-                console.log("authclicked");
-                $.ajax({
-                    type: "POST",
-                    url: "http://localhost:3000/signup",
-                    data: sublog,
-                    //성공시 200, 실패시 400
-                    success: function (data) {
-                        alert("WELCOME");
-                        window.location.href="../index.html"
-                    },
-                    error: function (request, status, error) {
-                        alert("이미 등록된 학번입니다");
+                let input_st=document.getElementById('student_number');
+                if(class_id==="cafemanager"){
+                    if(9000000000<=parseInt(input_st.value) && 9299999999>=parseInt(input_st.value))
+                    {
+                        let sublog = $('#needs-validation').serialize();
+                        console.log("authclicked");
+                        $.ajax({
+                            type: "POST",
+                            url: "http://localhost:3000/signup",
+                            data: sublog,
+                            //성공시 200, 실패시 400
+                            success: function (data) {
+                                alert("WELCOME");
+                                window.location.href="../index.html"
+                            },
+                            error: function (request, status, error) {
+                                alert("이미 등록된 학번입니다");
+                            }
+                        });
                     }
-                });
+                    else{
+                        alert("가게에게 할당받은 학번이 아닙니다");
+                    }
+                }
+                else
+                {
+                    let sublog = $('#needs-validation').serialize();
+                    console.log("authclicked");
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:3000/signup",
+                        data: sublog,
+                        //성공시 200, 실패시 400
+                        success: function (data) {
+                            alert("WELCOME");
+                            window.location.href="../index.html"
+                        },
+                        error: function (request, status, error) {
+                            alert("이미 등록된 학번입니다");
+                        }
+                    });
+                }
+                
             };
             
             

@@ -171,22 +171,24 @@
                         let jsondata=JSON.parse(data);
                         console.log(jsondata)
                         jsondata.forEach(n=>{
-                            namutableHTML+="<tbody>";
-                            namutableHTML+="<tr>";
-                            namutableHTML+="<td rowspan=\"6\">"+n.no+"</td>";
-                            namutableHTML+="<td>"+n.menu[0]+"</td>";
-                            namutableHTML+="<td>"+n.order[0]+"</td>";
-                            namutableHTML+="<td rowspan=\"6\">"+n.order_price+"</td>";
-                            if (n.orderStatus==0) namutableHTML+="<td rowspan=\"6\">"+"제조 중"+"</td>";
-                            else namutableHTML+="<td rowspan=\"6\">"+"완료"+"</td>";
-                            namutableHTML+="</tr>";
-                            for(let i=1; i<6; i++){
+                            if(n.orderStatus<2){
+                                namutableHTML+="<tbody>";
                                 namutableHTML+="<tr>";
-                                namutableHTML+="<td>"+n.menu[i]+"</td>";
-                                namutableHTML+="<td>"+n.order[i]+"</td>";
+                                namutableHTML+="<td rowspan=\"6\">"+n.no+"</td>";
+                                namutableHTML+="<td>"+n.menu[0]+"</td>";
+                                namutableHTML+="<td>"+n.order[0]+"</td>";
+                                namutableHTML+="<td rowspan=\"6\">"+n.order_price+"</td>";
+                                if (n.orderStatus==0) namutableHTML+="<td rowspan=\"6\">"+"제조 중"+"</td>";
+                                else namutableHTML+="<td rowspan=\"6\">"+"완료"+"</td>";
                                 namutableHTML+="</tr>";
+                                for(let i=1; i<6; i++){
+                                    namutableHTML+="<tr>";
+                                    namutableHTML+="<td>"+n.menu[i]+"</td>";
+                                    namutableHTML+="<td>"+n.order[i]+"</td>";
+                                    namutableHTML+="</tr>";
+                                }
+                                namutableHTML+="</tbody>";
                             }
-                            namutableHTML+="</tbody>";
                         })
                         namutable.innerHTML=namutableHTML;
                     },
@@ -209,22 +211,24 @@
                         let jsondata=JSON.parse(data);
                         console.log(jsondata)
                         jsondata.forEach(n=>{
-                            bluetableHTML+="<tbody>";
-                            bluetableHTML+="<tr>";
-                            bluetableHTML+="<td rowspan=\"6\">"+n.no+"</td>";
-                            bluetableHTML+="<td>"+n.menu[0]+"</td>";
-                            bluetableHTML+="<td>"+n.order[0]+"</td>";
-                            bluetableHTML+="<td rowspan=\"6\">"+n.order_price+"</td>";
-                            if (n.orderStatus==0) bluetableHTML+="<td rowspan=\"6\">"+"제조 중"+"</td>";
-                            else bluetableHTML+="<td rowspan=\"6\">"+"완료"+"</td>";
-                            bluetableHTML+="</tr>";
-                            for(let i=1; i<6; i++){
+                            if(n.orderStatus<2){
+                                bluetableHTML+="<tbody>";
                                 bluetableHTML+="<tr>";
-                                bluetableHTML+="<td>"+n.menu[i]+"</td>";
-                                bluetableHTML+="<td>"+n.order[i]+"</td>";
+                                bluetableHTML+="<td rowspan=\"6\">"+n.no+"</td>";
+                                bluetableHTML+="<td>"+n.menu[0]+"</td>";
+                                bluetableHTML+="<td>"+n.order[0]+"</td>";
+                                bluetableHTML+="<td rowspan=\"6\">"+n.order_price+"</td>";
+                                if (n.orderStatus===0) bluetableHTML+="<td rowspan=\"6\">"+"제조 중"+"</td>";
+                                else bluetableHTML+="<td rowspan=\"6\">"+"완료"+"</td>";
                                 bluetableHTML+="</tr>";
+                                for(let i=1; i<6; i++){
+                                    bluetableHTML+="<tr>";
+                                    bluetableHTML+="<td>"+n.menu[i]+"</td>";
+                                    bluetableHTML+="<td>"+n.order[i]+"</td>";
+                                    bluetableHTML+="</tr>";
+                                }
+                                bluetableHTML+="</tbody>";
                             }
-                            bluetableHTML+="</tbody>";
                         })
                         bluetable.innerHTML=bluetableHTML;
                     },
@@ -246,22 +250,24 @@
                         let jsondata=JSON.parse(data);
                         console.log(jsondata)
                         jsondata.forEach(n=>{
-                            pandorothytableHTML+="<tbody>";
-                            pandorothytableHTML+="<tr>";
-                            pandorothytableHTML+="<td rowspan=\"6\">"+n.no+"</td>";
-                            pandorothytableHTML+="<td>"+n.menu[0]+"</td>";
-                            pandorothytableHTML+="<td>"+n.order[0]+"</td>";
-                            pandorothytableHTML+="<td rowspan=\"6\">"+n.order_price+"</td>";
-                            if (n.orderStatus==0) pandorothytableHTML+="<td rowspan=\"6\">"+"제조 중"+"</td>";
-                            else pandorothytableHTML+="<td rowspan=\"6\">"+"완료"+"</td>";
-                            pandorothytableHTML+="</tr>";
-                            for(let i=1; i<6; i++){
+                            if(n.orderStatus<2){
+                                pandorothytableHTML+="<tbody>";
                                 pandorothytableHTML+="<tr>";
-                                pandorothytableHTML+="<td>"+n.menu[i]+"</td>";
-                                pandorothytableHTML+="<td>"+n.order[i]+"</td>";
+                                pandorothytableHTML+="<td rowspan=\""+n.menu.length+"\">"+n.no+"</td>";
+                                pandorothytableHTML+="<td>"+n.menu[0]+"</td>";
+                                pandorothytableHTML+="<td>"+n.order[0]+"</td>";
+                                pandorothytableHTML+="<td rowspan=\""+n.menu.length+"\">"+n.order_price+"</td>";
+                                if (n.orderStatus==0) pandorothytableHTML+="<td rowspan=\"6\">"+"제조 중"+"</td>";
+                                else pandorothytableHTML+="<td rowspan=\""+n.menu.length+"\">"+"완료"+"</td>";
                                 pandorothytableHTML+="</tr>";
+                                for(let i=1; i<n.menu.length; i++){
+                                    pandorothytableHTML+="<tr>";
+                                    pandorothytableHTML+="<td>"+n.menu[i]+"</td>";
+                                    pandorothytableHTML+="<td>"+n.order[i]+"</td>";
+                                    pandorothytableHTML+="</tr>";
+                                }
+                                pandorothytableHTML+="</tbody>";
                             }
-                            pandorothytableHTML+="</tbody>";
                         })
                         pandorothytable.innerHTML=pandorothytableHTML;
                     },

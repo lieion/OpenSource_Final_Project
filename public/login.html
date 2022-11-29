@@ -126,6 +126,9 @@
                         login_data=JSON.parse(data);
                         localStorage.setItem('id',login_data.state);
                         localStorage.setItem('auth',login_data.auth);
+                        if(login_data.ban===1){
+                            alert("신고를 받은 계정입니다");
+                        }
                         window.location.href="../index.html"
                     },
                     error: function (request, status, error) {

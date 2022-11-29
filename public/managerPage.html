@@ -76,26 +76,23 @@
         </header>
         <main class="col-md-10 px-md-5"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-              <h1 class="h2">manager Page</h1>
+              <h1 class="h2">Manager Page</h1>
               <div class="btn-toolbar mb-2 mb-md-0">
               </div>
             </div>
+      
+            <h3>Ordered</h3>
+            <div class="table-responsive">
+              <table class="table table-striped table-sm" id="orderedtable"></table>
+            </div>  
+
+            <h3>Waiting</h3>
+            <div class="table-responsive">
+              <table class="table table-striped table-sm" id="waitingtable"></table>
+            </div>
             
-            <h3>Cafe Namu</h3>
-            <div class="table-responsive">
-              <table class="table table-striped table-sm" id="namutable"></table>
-            </div>
+          </main>
 
-            <h3>Blue_Port</h3>
-            <div class="table-responsive">
-              <table class="table table-striped table-sm" id="bluetable"></table>
-            </div>
-
-            <h3>Pandorothy</h3>
-            <div class="table-responsive">
-              <table class="table table-striped table-sm" id="pandorothytable"></table>
-            </div>
-        </main>
         <div class="container">
             <footer class="py-3 my-4">
               <ul class="nav justify-content-center border-bottom pb-3 mb-3">
@@ -140,7 +137,7 @@
                 login_state=1;
                 loginBtnPart.innerText = 'Log-Out';
 
-                signUpPart.innerText = 'My Page';
+                signUpPart.innerText = 'Manager Page';
                 signUpPart.disabled=true;   
                 /*log - in btn이 클릭되면 login html로 이동한다*/
                 login_button.addEventListener("click",()=>{
@@ -154,6 +151,102 @@
                 
                 
             }
+
+            function innerClick(n){
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:3000/moveDone",
+                    data: {
+                        id: tsk,
+                        idx: n
+                    },
+                    success: function (data) {
+                        console.log("OK");
+                    },
+                    error: function (request, status, error) {
+                        console.log("ERROR");
+                    }
+                });
+                window.location.replace("./managerPage.html")
+            }
+
+            function banuser(n){
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:3000/banUser",
+                    data: {
+                        id: n
+                    },
+                    success: function (data) {
+                        console.log("OK");
+                    },
+                    error: function (request, status, error) {
+                        console.log("ERROR");
+                    }
+                });
+            }
+
+
+            //pandorothy table 관련해서 Post로 id에 맞는 주문 정보를 받고 표를 그린다.
+            let orderedtable=document.getElementById('orderedtable');
+            let waitingtable=document.getElementById('waitingtable');
+            let orderedtableHTML="<thead><tr><th scope=\"col\">#</th><th scope=\"col\">Menu</th><th scope=\"col\">Count</th><th scope=\"col\">Price</th><th scope=\"col\">Time</th><th scope=\"col\">Done</th></tr></thead>";
+            let orderedtableHTML_Fin="<thead><tr><th scope=\"col\">#</th><th scope=\"col\">Menu</th><th scope=\"col\">Count</th><th scope=\"col\">Price</th><th scope=\"col\">Time</th><th scope=\"col\">Done</th></tr></thead>";
+            $.ajax({
+                    type: "POST",
+                    url: "http://localhost:3000/mangerPage",
+                    data: {
+                        id: tsk
+                    },
+                    success: function (data) {
+                        let jsondata=JSON.parse(data);
+                        console.log(jsondata)
+                        jsondata.forEach(n=>{
+                            if(n.orderStatus === 0){
+                                orderedtableHTML+="<tbody>";
+                                orderedtableHTML+="<tr>";
+                                orderedtableHTML+="<td rowspan=\""+n.menu.length+"\">"+n.no+"</td>";
+                                orderedtableHTML+="<td>"+n.menu[0]+"</td>";
+                                orderedtableHTML+="<td>"+n.order[0]+"</td>";
+                                orderedtableHTML+="<td rowspan=\""+n.menu.length+"\">"+n.order_price+"</td>";
+                                orderedtableHTML+="<td rowspan=\""+n.menu.length+"\">"+n.order_time+"</td>";
+                                orderedtableHTML+="<td rowspan=\""+n.menu.length+"\">"+"<button type=\"button\" class=\"btn btn-warning me-2\" id=\""+ "ordered" + n.no +"\" onclick=\"innerClick("+n.no+");\">완료</button>"+"</td>";
+                                orderedtableHTML+="</tr>";
+                                for(let i=1; i<n.menu.length; i++){
+                                    orderedtableHTML+="<tr>";
+                                    orderedtableHTML+="<td>"+n.menu[i]+"</td>";
+                                    orderedtableHTML+="<td>"+n.order[i]+"</td>";
+                                    orderedtableHTML+="</tr>";
+                                }
+                                orderedtableHTML+="</tbody>";
+                            }
+                            else if(n.orderStatus === 1){
+                                orderedtableHTML_Fin+="<tbody>";
+                                orderedtableHTML_Fin+="<tr>";
+                                orderedtableHTML_Fin+="<td rowspan=\""+n.menu.length+"\">"+n.no+"</td>";
+                                orderedtableHTML_Fin+="<td>"+n.menu[0]+"</td>";
+                                orderedtableHTML_Fin+="<td>"+n.order[0]+"</td>";
+                                orderedtableHTML_Fin+="<td rowspan=\""+n.menu.length+"\">"+n.order_price+"</td>";
+                                orderedtableHTML_Fin+="<td rowspan=\""+n.menu.length+"\">"+n.order_time+"</td>";
+                                orderedtableHTML_Fin+="<td rowspan=\""+n.menu.length+"\">"+"<button type=\"button\" class=\"btn btn-warning me-2\" id=\""+ "ordered" + n.no +"\" onclick=\"innerClick("+n.no+");\">완료</button>"+"</td>";
+                                orderedtableHTML_Fin+="<td rowspan=\""+n.menu.length+"\">"+"<button type=\"button\" class=\"btn btn-warning me-2\" id=\""+ "ordered" + n.no +"\" onclick=\"banuser("+n.sid+"); innerClick("+n.no+");\">신고</button>"+"</td>";
+                                orderedtableHTML_Fin+="</tr>";
+                                for(let i=1; i<n.menu.length; i++){
+                                    orderedtableHTML_Fin+="<tr>";
+                                    orderedtableHTML_Fin+="<td>"+n.menu[i]+"</td>";
+                                    orderedtableHTML_Fin+="<td>"+n.order[i]+"</td>";
+                                    orderedtableHTML_Fin+="</tr>";
+                                }
+                                orderedtableHTML_Fin+="</tbody>";
+                            }
+                        })
+                        orderedtable.innerHTML=orderedtableHTML;
+                        waitingtable.innerHTML=orderedtableHTML_Fin;
+                    },
+                    error: function (request, status, error) {
+                        console.log("ERROR");
+                    }
+            });
             
         </script>
     </body>

@@ -17,6 +17,10 @@ let blue_orderList=[];
 let namu_orderList=[];
 let pandorothy_orderList=[];
 
+let blue_orderList_fin=[];
+let namu_orderList_fin=[];
+let pandorothy_orderList_fin=[];
+
 
 //개발용으로 확인 용
 app.get('/signup', (req, res) => {
@@ -25,8 +29,6 @@ app.get('/signup', (req, res) => {
 
 app.post('/signup', (req, res) => {
     let state=0;
-    console.log("here");
-    console.log(req.body);
     //학번 검사를 통해 이미 회원가입을 했는지 확인
     userInfo.forEach(chat => {
         if(chat.student_number===req.body.student_number){
@@ -36,7 +38,6 @@ app.post('/signup', (req, res) => {
 
     //존재한다면?
     if(state===1){
-        console.log("이미 존재");
         res.status(400).end();
     }
     else{
@@ -52,12 +53,15 @@ app.post('/signup', (req, res) => {
     
 })
 
+app.post('/getBan',(req,res)=>{
+    let ret = JSON.stringify(userInfo.filter((n)=>n.logstate===1))
+    res.send(ret);
+})
+
 app.post('/logins',(req,res)=>{
     let ret=new Object();
     ret.state=0;
     ret.auth="";
-    console.log("logins");
-    console.log(req.body);
     //학번 존재 여부 확인
     userInfo.forEach(chat => {
         if(chat.student_number===req.body.student_number){
@@ -65,6 +69,7 @@ app.post('/logins',(req,res)=>{
             if (chat.password===req.body.passw){
                 ret.state=chat.student_number;
                 ret.auth=chat.class;
+                ret.ban=chat.logstate;
             }
         }
     })
@@ -122,6 +127,7 @@ app.post('/blueportOrder', (req, res) => {
             let tempObj=new Object();
             tempObj.no=retno;
             retno+=1;
+            tempObj.sid=sid;
             tempObj.menu=ord.order_menu;
             tempObj.menu_price=ord.menu_price;
             tempObj.order=ord.order;
@@ -151,6 +157,7 @@ app.post('/cafeNamuOrder', (req, res) => {
             let tempObj=new Object();
             tempObj.no=retno;
             retno+=1;
+            tempObj.sid=ord.user;
             tempObj.menu=ord.order_menu;
             tempObj.menu_price=ord.menu_price;
             tempObj.order=ord.order;
@@ -179,6 +186,7 @@ app.post('/pandorothyOrder', (req, res) => {
             let tempObj=new Object();
             tempObj.no=retno;
             retno+=1;
+            tempObj.sid=sid;
             tempObj.menu=ord.order_menu;
             tempObj.menu_price=ord.menu_price;
             tempObj.order=ord.order;
@@ -220,6 +228,98 @@ app.get('/pandorothyOrder', (req, res) => {
     res.send(JSON.stringify(pandorothy_orderList));
 })
 
+app.post('/banUser',(req,res) => {
+    console.log("BANNNNN");
+    for (let i=0; i<userInfo.length; i++){
+        console.log(userInfo[i].student_number);
+        console.log(req.body.id);
+        if(userInfo[i].student_number===req.body.id){
+            userInfo[i].logstate = 1;
+        }
+    }
+    console.log(userInfo);
+    res.status(200).end();
+})
+
+
+
+//매니저 페이지에 주문 정보를 보내준다.
+app.post('/mangerPage', (req, res) => {
+    let sid=parseInt(req.body.id);
+    let ret=[];
+    let retno=1;
+    if(sid>=9000000000 && sid<=9099999999) {
+        namu_orderList.forEach(ord=>{
+            let tempObj=new Object();
+            
+            tempObj.no=retno;
+            retno+=1;
+            tempObj.sid=ord.user;
+            tempObj.menu=ord.order_menu;
+            tempObj.menu_price=ord.menu_price;
+            tempObj.order=ord.order;
+            tempObj.order_price=ord.order_price
+            tempObj.orderStatus=ord.isDone;
+            tempObj.order_time=ord.order_time;
+            ret.push(tempObj);
+            
+        })
+        res.send(JSON.stringify(ret));
+    }
+    else if(sid>=9100000000 && sid<=9199999999){
+        blue_orderList.forEach(ord=>{
+            let tempObj=new Object();
+            tempObj.no=retno;
+            retno+=1;
+            tempObj.sid=ord.user;
+            tempObj.menu=ord.order_menu;
+            tempObj.menu_price=ord.menu_price;
+            tempObj.order=ord.order;
+            tempObj.order_price=ord.order_price
+            tempObj.orderStatus=ord.isDone;
+            tempObj.order_time=ord.order_time;
+            ret.push(tempObj);
+            
+        })
+        res.send(JSON.stringify(ret));
+    }
+    else if(sid>=9200000000 && sid<=9299999999){
+        pandorothy_orderList.forEach(ord=>{
+            let tempObj=new Object();
+            tempObj.no=retno;
+            retno+=1;
+            tempObj.sid=ord.user;
+            tempObj.menu=ord.order_menu;
+            tempObj.menu_price=ord.menu_price;
+            tempObj.order=ord.order;
+            tempObj.order_price=ord.order_price
+            tempObj.orderStatus=ord.isDone;
+            tempObj.order_time=ord.order_time;
+            ret.push(tempObj);
+            
+        })
+        res.send(JSON.stringify(ret));
+    }
+    else{
+        res.status(400).end();
+    }
+})
+
+
+app.post('/moveDone', (req, res) => {
+    let sid=req.body.id;
+    let idx=req.body.idx;
+    if(sid>=9000000000 && sid<=9099999999) {
+        namu_orderList[idx-1].isDone+=1;
+    }
+    else if(sid>=9100000000 && sid<=9199999999){
+        blue_orderList[idx-1].isDone+=1;
+    }
+    else{
+        pandorothy_orderList[idx-1].isDone+=1;
+    }
+    res.status(200).end();
+})
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
@@ -233,6 +333,21 @@ app.listen(port, () => {
     newUser.banned=0;//banned 0 normal, 1 advise(alert to manager), 2 banned (can't login)
     userInfo.push(newUser);
 
+    let newUserC=new Object();
+    newUserC.student_number="9000000001";
+    newUserC.password="qwerty123!";
+    newUserC.class="cafemanager";
+    newUserC.logstate=0;
+    newUserC.banned=0;//banned 0 normal, 1 advise(alert to manager), 2 banned (can't login)
+    userInfo.push(newUserC);
+
+    let newUserS=new Object();
+    newUserS.student_number="2018311485";
+    newUserS.password="qwerty123!";
+    newUserS.class="education";
+    newUserS.logstate=0;
+    newUserS.banned=0;//banned 0 normal, 1 advise(alert to manager), 2 banned (can't login)
+    userInfo.push(newUserS);
     
     /*
     json 변환해서 카페 메뉴 정보를 폴더에 넣은 뒤 불러와서 array에 넣어주는 작업
