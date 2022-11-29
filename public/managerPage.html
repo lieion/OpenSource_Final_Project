@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--Required meta tags-->
+        <meta charset="utf-8">
+        <meta name="viewport"content="width=device-width, initial-scale=1">
+        <!--BootstrapCSS-->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <title>Home</title>
+        <style>
+            .navbar-toggler{
+                margin-right: 30px;
+            }
+            .bi-cup-hot-fill{
+                padding-right: 8px;
+            }
+            .dropdown-item{
+                margin-top: 5px;
+            }
+            .dropdown-toggle{
+                margin-left: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="p-3 text-bg-dark">
+            <div class="container">
+              <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="../index.html" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none p-2">
+                    <i class="bi bi-cup-hot-fill"></i> SKAFE
+                </a>
+    
+                <div class="text-center p-2" id="navbar_item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="first_element">
+                        Cafe Namu
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="./menu_cafe_namu.html">메뉴</a></li>
+                        <li><a class="dropdown-item" href="./location(Cafe_Namu).html">지도</a></li>
+                        <li><a class="dropdown-item" href="#">행사</a></li>
+                      </ul>
+                </div>
+    
+                <div class="text-center p-2" id="navbar_item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Blue Port
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="./menu_blue_port.html">메뉴</a></li>
+                        <li><a class="dropdown-item" href="./location(Blue_Port).html">지도</a></li>
+                        <li><a class="dropdown-item" href="#">행사</a></li>
+                      </ul>
+                </div>
+    
+                <div class="text-center p-2" id="navbar_item">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Pandorothy
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="./menu_pandorothy.html">메뉴</a></li>
+                        <li><a class="dropdown-item" href="./location(Pandorothy).html">지도</a></li>
+                        <li><a class="dropdown-item" href="#">행사</a></li>
+                      </ul>
+                </div>
+    
+                <div class="text-end position-relative top-0 start-50">
+                    <button type="button" class="btn btn-outline-light me-2" id="login">Login</button>
+                    <button type="button" class="btn btn-warning" id="sign-up">Sign-up</button>
+                </div>
+                
+              </div>
+            </div>
+        </header>
+        <main class="col-md-10 px-md-5"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+              <h1 class="h2">manager Page</h1>
+              <div class="btn-toolbar mb-2 mb-md-0">
+              </div>
+            </div>
+            
+            <h3>Cafe Namu</h3>
+            <div class="table-responsive">
+              <table class="table table-striped table-sm" id="namutable"></table>
+            </div>
+
+            <h3>Blue_Port</h3>
+            <div class="table-responsive">
+              <table class="table table-striped table-sm" id="bluetable"></table>
+            </div>
+
+            <h3>Pandorothy</h3>
+            <div class="table-responsive">
+              <table class="table table-striped table-sm" id="pandorothytable"></table>
+            </div>
+        </main>
+        <div class="container">
+            <footer class="py-3 my-4">
+              <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+              </ul>
+              <p class="text-center text-muted">© 2022 Company, Inc</p>
+            </footer>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"crossorigin="anonymous">
+        </script>
+        <script>/*JSCode*/
+            //세션에 암호화하고 하는 로그인 설정 대신 로컬스토리지로 로그인 상태 대체
+            let tsk=localStorage.getItem('id');
+            console.log(tsk)
+            let login_state=0
+            let loginBtnPart=document.getElementById('login');
+            let signUpPart=document.getElementById('sign-up');
+            let login_button=document.querySelector("#login");
+            let signup_btn=document.querySelector("#sign-up");
+            //로그인 되어있는지 안되어있는지 확인
+            //로그인 되어있다면 로그인 버튼을 로그아웃 버튼으로 바꾼다. 기능도 달리한다.
+            if (tsk===undefined || tsk==="0" || tsk===null)
+            {
+                login_state=0;
+                loginBtnPart.innerText = 'Login';            
+                signUpPart.disabled=false;
+                /*log - in btn이 클릭되면 login html로 이동한다*/              
+                login_button.addEventListener("click",()=>{
+                    location.href="./process/login.html"
+                });
+                /*sign up btn이 클릭되면 sign-up html로 이동한다*/            
+                signup_btn.addEventListener("click",()=>{
+                    location.href="./process/sign-up.html"
+                });
+            }
+            else
+            {
+                login_state=1;
+                loginBtnPart.innerText = 'Log-Out';
+
+                signUpPart.innerText = 'My Page';
+                signUpPart.disabled=true;   
+                /*log - in btn이 클릭되면 login html로 이동한다*/
+                login_button.addEventListener("click",()=>{
+                    localStorage.setItem('id','0');
+                    location.href="../"
+                });
+                /*sign up btn이 클릭되면 sign-up html로 이동한다*/
+                signup_btn.addEventListener("click",()=>{
+                    location.href="./public/myPage.html"
+                });
+                
+                
+            }
+            
+        </script>
+    </body>
+</html>
+
