@@ -49,11 +49,11 @@
 
                 <div class="text-center p-2" id="navbar_item">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Blue Port
+                        Blue Pot
                       </a>
                       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="./menu_blue_port.html">메뉴</a></li>
-                        <li><a class="dropdown-item" href="./location(Blue_Port).html">지도</a></li>
+                        <li><a class="dropdown-item" href="./menu_blue_pot.html">메뉴</a></li>
+                        <li><a class="dropdown-item" href="./location(Blue_Pot).html">지도</a></li>
                         <li><a class="dropdown-item" href="#">행사</a></li>
                       </ul>
                 </div>
@@ -70,7 +70,7 @@
                 </div>
 
                 <div class="text-end position-relative top-0 start-50">
-                    <button type="button" class="btn btn-outline-light me-2" id="login" disabled>Login</button>
+                    <button type="button" class="btn btn-outline-light me-2" id="login">Login</button>
                     <button type="button" class="btn btn-warning" id="sign-up">Sign-up</button>
                 </div>
                 
@@ -193,23 +193,9 @@
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"crossorigin="anonymous">
         </script>
+        
         <script>/*JSCode*/
-            /* 로컬로 부터 현재 접속되어있는 id를 물어본다 */
-            let tsk=localStorage.getItem('id');
-            console.log(tsk)
-
-            /*log - in btn이 클릭되면 login html로 이동한다*/
-            let login_button=document.querySelector("#login");
-            login_button.addEventListener("click",()=>{
-                location.href="./login.html"
-            });
-
-            /*sign up btn이 클릭되면 sign-up html로 이동한다*/
-            let signup_btn=document.querySelector("#sign-up");
-            signup_btn.addEventListener("click",()=>{
-                location.href="./sign-up.html"
-            });
-
+            localStorage.setItem('market',1);
             // Cafe Namu의 메뉴 리스트 (key: 메뉴명, value: 가격)
             let menu = {
                 "[ICE] Americano": 2000,
@@ -322,51 +308,7 @@
             });
 
             
-            // order button을 눌렀을 때
-            let orderbutton = document.querySelector("#orderbutton");
-            orderbutton.addEventListener("click", () => {
-                let total_price = 0;
-                let menu_name = Object.keys(menu);
-                let menu_price = Object.values(menu);
-                for(var i = 0; i < 6; i++){
-                    total_price += order_list[i] * menu_price[i];
-                }
-                $.ajax({
-                    type: "POST",
-                    url: "http://localhost:3000/order",
-                    data: {
-                        student_number: tsk,
-                        market: 1,
-                        total: total_price,
-                        menu: menu_name,
-                        price: order_list,
-                        menu_price: menu_price
-                    },
-                    success: function (data) {
-                        alert("주문 완료");
-                        console.log(data);
-                        window.location.href="./myPage.html"
-
-                        /* myPage에서 뒤로 가기 눌렀을 때 value 값과 total관련 맞지 않는 문제 발견 -> 0으로 초기화*/
-                        document.querySelector("#input1").value=0;
-                        document.querySelector("#input2").value=0;
-                        document.querySelector("#input3").value=0;
-                        document.querySelector("#input4").value=0;
-                        document.querySelector("#input5").value=0;
-                        document.querySelector("#input6").value=0;
-                    },
-                    error: function (request, status, error) {
-                        if (request.status===400) alert("주문이 비어있습니다")
-                        else alert("주문 실패");
-                    }
-                    });
-                /* Todo
-                1. total_price에 주문한 총 금액이 저장되어 있습니다.
-                2. order_list에 각 상품의 주문량이 저장되어 있습니다. ex) order_list[0] -> 첫번째 상품(아이스 아메리카노) 주문 개수
-                3. menu_name에 각 상품의 이름이 저장되어 있습니다. ex) menu_name[0] -> "[ICE] Americano" (string)
-                4. menu_price에 각 상품의 가격이 저장되어 있습니다. ex) menu_price[0] -> 2000 (int)
-                */
-            })
         </script>
+        <script src="./js/orderbutton.js"> </script>
     </body>
 </html>

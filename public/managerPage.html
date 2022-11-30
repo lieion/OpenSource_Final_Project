@@ -49,7 +49,7 @@
                         Blue Pot
                       </a>
                       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="./menu_blue_Pot.html">메뉴</a></li>
+                        <li><a class="dropdown-item" href="./menu_blue_pot.html">메뉴</a></li>
                         <li><a class="dropdown-item" href="./location(Blue_Pot).html">지도</a></li>
                         <li><a class="dropdown-item" href="#">행사</a></li>
                       </ul>
@@ -76,27 +76,21 @@
         </header>
         <main class="col-md-10 px-md-5"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-              <h1 class="h2">My Page</h1>
+              <h1 class="h2">Manager Page</h1>
               <div class="btn-toolbar mb-2 mb-md-0">
               </div>
             </div>
       
-
-      
-            <h3>Cafe Namu</h3>
+            <h3>Ordered</h3>
             <div class="table-responsive">
-              <table class="table table-striped table-sm" id="namutable"></table>
-            </div>
+              <table class="table table-striped table-sm" id="orderedtable"></table>
+            </div>  
 
-            <h3>Blue_Pot</h3>
+            <h3>Waiting</h3>
             <div class="table-responsive">
-              <table class="table table-striped table-sm" id="bluetable"></table>
+              <table class="table table-striped table-sm" id="waitingtable"></table>
             </div>
-
-            <h3>Pandorothy</h3>
-            <div class="table-responsive">
-              <table class="table table-striped table-sm" id="pandorothytable"></table>
-            </div>
+            
           </main>
 
         <div class="container">
@@ -143,7 +137,7 @@
                 login_state=1;
                 loginBtnPart.innerText = 'Log-Out';
 
-                signUpPart.innerText = 'My Page';
+                signUpPart.innerText = 'Manager Page';
                 signUpPart.disabled=true;   
                 /*log - in btn이 클릭되면 login html로 이동한다*/
                 login_button.addEventListener("click",()=>{
@@ -158,91 +152,51 @@
                 
             }
 
-            //cafe namu 관련해서 Post로 id에 맞는 주문 정보를 받고 표를 그린다.
-            let namutable=document.getElementById('namutable');
-            let namutableHTML="<thead><tr><th scope=\"col\">#</th><th scope=\"col\">Menu</th><th scope=\"col\">Count</th><th scope=\"col\">Price</th><th scope=\"col\">State</th></tr></thead>";
-            $.ajax({
+            //확인을 눌러서 제조중에서 완성 상태로 바꾼다.
+            function innerClick(n){
+                $.ajax({
                     type: "POST",
-                    url: "http://localhost:3000/cafeNamuOrder",
+                    url: "http://localhost:3000/moveDone",
                     data: {
-                        id: tsk
+                        id: tsk,
+                        idx: n
                     },
                     success: function (data) {
-                        let jsondata=JSON.parse(data);
-                        console.log(jsondata)
-                        jsondata.forEach(n=>{
-                            if(n.orderStatus<2){
-                                namutableHTML+="<tbody>";
-                                namutableHTML+="<tr>";
-                                namutableHTML+="<td rowspan=\"6\">"+n.no+"</td>";
-                                namutableHTML+="<td>"+n.menu[0]+"</td>";
-                                namutableHTML+="<td>"+n.order[0]+"</td>";
-                                namutableHTML+="<td rowspan=\"6\">"+n.order_price+"</td>";
-                                if (n.orderStatus==0) namutableHTML+="<td rowspan=\"6\">"+"제조 중"+"</td>";
-                                else namutableHTML+="<td rowspan=\"6\">"+"완료"+"</td>";
-                                namutableHTML+="</tr>";
-                                for(let i=1; i<6; i++){
-                                    namutableHTML+="<tr>";
-                                    namutableHTML+="<td>"+n.menu[i]+"</td>";
-                                    namutableHTML+="<td>"+n.order[i]+"</td>";
-                                    namutableHTML+="</tr>";
-                                }
-                                namutableHTML+="</tbody>";
-                            }
-                        })
-                        namutable.innerHTML=namutableHTML;
+                        console.log("OK");
                     },
                     error: function (request, status, error) {
                         console.log("ERROR");
                     }
-            });
+                });
+                window.location.replace("./managerPage.html")
+            }
 
-
-            //blue table 관련해서 Post로 id에 맞는 주문 정보를 받고 표를 그린다.
-            let bluetable=document.getElementById('bluetable');
-            let bluetableHTML="<thead><tr><th scope=\"col\">#</th><th scope=\"col\">Menu</th><th scope=\"col\">Count</th><th scope=\"col\">Price</th><th scope=\"col\">State</th></tr></thead>";
-            $.ajax({
+            //노쇼한 유저에 대해서 신고한다. 
+            function banuser(n){
+                $.ajax({
                     type: "POST",
-                    url: "http://localhost:3000/bluepotOrder",
+                    url: "http://localhost:3000/banUser",
                     data: {
-                        id: tsk
+                        id: n
                     },
                     success: function (data) {
-                        let jsondata=JSON.parse(data);
-                        console.log(jsondata)
-                        jsondata.forEach(n=>{
-                            if(n.orderStatus<2){
-                                bluetableHTML+="<tbody>";
-                                bluetableHTML+="<tr>";
-                                bluetableHTML+="<td rowspan=\"6\">"+n.no+"</td>";
-                                bluetableHTML+="<td>"+n.menu[0]+"</td>";
-                                bluetableHTML+="<td>"+n.order[0]+"</td>";
-                                bluetableHTML+="<td rowspan=\"6\">"+n.order_price+"</td>";
-                                if (n.orderStatus===0) bluetableHTML+="<td rowspan=\"6\">"+"제조 중"+"</td>";
-                                else bluetableHTML+="<td rowspan=\"6\">"+"완료"+"</td>";
-                                bluetableHTML+="</tr>";
-                                for(let i=1; i<6; i++){
-                                    bluetableHTML+="<tr>";
-                                    bluetableHTML+="<td>"+n.menu[i]+"</td>";
-                                    bluetableHTML+="<td>"+n.order[i]+"</td>";
-                                    bluetableHTML+="</tr>";
-                                }
-                                bluetableHTML+="</tbody>";
-                            }
-                        })
-                        bluetable.innerHTML=bluetableHTML;
+                        console.log("OK");
                     },
                     error: function (request, status, error) {
                         console.log("ERROR");
                     }
-            });
-            
+                });
+            }
+
+
             //pandorothy table 관련해서 Post로 id에 맞는 주문 정보를 받고 표를 그린다.
-            let pandorothytable=document.getElementById('pandorothytable');
-            let pandorothytableHTML="<thead><tr><th scope=\"col\">#</th><th scope=\"col\">Menu</th><th scope=\"col\">Count</th><th scope=\"col\">Price</th><th scope=\"col\">State</th></tr></thead>";
+            let orderedtable=document.getElementById('orderedtable');
+            let waitingtable=document.getElementById('waitingtable');
+            let orderedtableHTML="<thead><tr><th scope=\"col\">#</th><th scope=\"col\">Menu</th><th scope=\"col\">Count</th><th scope=\"col\">Price</th><th scope=\"col\">Time</th><th scope=\"col\">Done</th></tr></thead>";
+            let orderedtableHTML_Fin="<thead><tr><th scope=\"col\">#</th><th scope=\"col\">Menu</th><th scope=\"col\">Count</th><th scope=\"col\">Price</th><th scope=\"col\">Time</th><th scope=\"col\">Done</th></tr></thead>";
             $.ajax({
                     type: "POST",
-                    url: "http://localhost:3000/pandorothyOrder",
+                    url: "http://localhost:3000/mangerPage",
                     data: {
                         id: tsk
                     },
@@ -250,26 +204,48 @@
                         let jsondata=JSON.parse(data);
                         console.log(jsondata)
                         jsondata.forEach(n=>{
-                            if(n.orderStatus<2){
-                                pandorothytableHTML+="<tbody>";
-                                pandorothytableHTML+="<tr>";
-                                pandorothytableHTML+="<td rowspan=\""+n.menu.length+"\">"+n.no+"</td>";
-                                pandorothytableHTML+="<td>"+n.menu[0]+"</td>";
-                                pandorothytableHTML+="<td>"+n.order[0]+"</td>";
-                                pandorothytableHTML+="<td rowspan=\""+n.menu.length+"\">"+n.order_price+"</td>";
-                                if (n.orderStatus==0) pandorothytableHTML+="<td rowspan=\"6\">"+"제조 중"+"</td>";
-                                else pandorothytableHTML+="<td rowspan=\""+n.menu.length+"\">"+"완료"+"</td>";
-                                pandorothytableHTML+="</tr>";
+                            if(n.orderStatus === 0){
+                                orderedtableHTML+="<tbody>";
+                                orderedtableHTML+="<tr>";
+                                orderedtableHTML+="<td rowspan=\""+n.menu.length+"\">"+n.no+"</td>";
+                                orderedtableHTML+="<td>"+n.menu[0]+"</td>";
+                                orderedtableHTML+="<td>"+n.order[0]+"</td>";
+                                orderedtableHTML+="<td rowspan=\""+n.menu.length+"\">"+n.order_price+"</td>";
+                                orderedtableHTML+="<td rowspan=\""+n.menu.length+"\">"+n.order_time+"</td>";
+                                //완료 버튼을 통해서 waiting table에 주문 정보가 가게 한다.
+                                orderedtableHTML+="<td rowspan=\""+n.menu.length+"\">"+"<button type=\"button\" class=\"btn btn-warning me-2\" id=\""+ "ordered" + n.no +"\" onclick=\"innerClick("+n.no+");\">완료</button>"+"</td>";
+                                orderedtableHTML+="</tr>";
                                 for(let i=1; i<n.menu.length; i++){
-                                    pandorothytableHTML+="<tr>";
-                                    pandorothytableHTML+="<td>"+n.menu[i]+"</td>";
-                                    pandorothytableHTML+="<td>"+n.order[i]+"</td>";
-                                    pandorothytableHTML+="</tr>";
+                                    orderedtableHTML+="<tr>";
+                                    orderedtableHTML+="<td>"+n.menu[i]+"</td>";
+                                    orderedtableHTML+="<td>"+n.order[i]+"</td>";
+                                    orderedtableHTML+="</tr>";
                                 }
-                                pandorothytableHTML+="</tbody>";
+                                orderedtableHTML+="</tbody>";
+                            }
+                            else if(n.orderStatus === 1){
+                                orderedtableHTML_Fin+="<tbody>";
+                                orderedtableHTML_Fin+="<tr>";
+                                orderedtableHTML_Fin+="<td rowspan=\""+n.menu.length+"\">"+n.no+"</td>";
+                                orderedtableHTML_Fin+="<td>"+n.menu[0]+"</td>";
+                                orderedtableHTML_Fin+="<td>"+n.order[0]+"</td>";
+                                orderedtableHTML_Fin+="<td rowspan=\""+n.menu.length+"\">"+n.order_price+"</td>";
+                                orderedtableHTML_Fin+="<td rowspan=\""+n.menu.length+"\">"+n.order_time+"</td>";
+                                //onclick으로 버튼에 함수를 추가한다 확인은 그 목록을 안보이게 하고 신고는 유저 신고와 동시에 목록에서 삭제하게 한다.
+                                orderedtableHTML_Fin+="<td rowspan=\""+n.menu.length+"\">"+"<button type=\"button\" class=\"btn btn-warning me-2\" id=\""+ "ordered" + n.no +"\" onclick=\"innerClick("+n.no+");\">완료</button>"+"</td>";
+                                orderedtableHTML_Fin+="<td rowspan=\""+n.menu.length+"\">"+"<button type=\"button\" class=\"btn btn-warning me-2\" id=\""+ "ordered" + n.no +"\" onclick=\"banuser("+n.sid+"); innerClick("+n.no+");\">신고</button>"+"</td>";
+                                orderedtableHTML_Fin+="</tr>";
+                                for(let i=1; i<n.menu.length; i++){
+                                    orderedtableHTML_Fin+="<tr>";
+                                    orderedtableHTML_Fin+="<td>"+n.menu[i]+"</td>";
+                                    orderedtableHTML_Fin+="<td>"+n.order[i]+"</td>";
+                                    orderedtableHTML_Fin+="</tr>";
+                                }
+                                orderedtableHTML_Fin+="</tbody>";
                             }
                         })
-                        pandorothytable.innerHTML=pandorothytableHTML;
+                        orderedtable.innerHTML=orderedtableHTML;
+                        waitingtable.innerHTML=orderedtableHTML_Fin;
                     },
                     error: function (request, status, error) {
                         console.log("ERROR");
