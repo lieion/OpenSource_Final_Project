@@ -1,24 +1,48 @@
 # OpenSource_Final_Project
-오픈 소스 기말 과제 
-Title : SKAFE (CAFE Campus)
 
-1. 목적 :
-학교 카페에 대한 홍보와 예약 시스템을 구현하면 좋을 것 같아서 개발을 진행하게 되었다.
----------------------------
-2. 실행 방법
+## SKAFE (CAFE Campus)
+> SKKU(자연과학캠퍼스) 교내 카페들에 대한 스마트 오더 시스템을 구축 
 
---------------------------
-3. 기능 설명
-- 학생/교직원
+## Installation
+``` bash
+npm install
+```
 
-- 카페 관리자
+## How to use
+### server
+``` bash
+npm start
+```
+### client
+- http://localhost:5500/ 으로 Main Page 접속  
+- 회원가입
+  1. 카페 관리자 - ID: **9000000000-9999999999**, Password: 8자리 이상~16자리 이하 / 숫자와 특수문자가 포함되어야 한다.
+  1. 고객 - ID: **학번**, Password: 8자리 이상~16자리 이하 / 숫자와 특수문자가 포함되어야 한다.
 
-- 프로그램 관리자
---------------------------
-4. Screen Shot
+- 기능 
+  - 고객
+    1. 각 카페별 메뉴 확인 및 주문 기능
+    1. 각 카페별 위치 지도로 확인
+    1. My Page에서 주문 현황 확인
+  - 카페 관리자
+    1. 주문 확인 및 음료 완성 알림 기능
+    1. 고객이 픽업 롼료한 주문 clear하는 기능
+    1. No-show 고객 신고 기능
+  - Admin
+    1. 신고가 접수되어 Ban된 사용자를 확인할 수 있다.
 
--------------------------
-5.Presentation
+## Screenshots
+- **고객**
+  1. 주문 페이지  
+    <img src="./public/img/markdown-user2.PNG"  width="60%" height="60%"/>  
 
-------------------------
-6.Others
+  1. My page - 주문 현황 확인  
+    <img src="./public/img/markdown-user3.PNG"  width="60%" height="60%"/>  
+
+- **카페 관리자** - 미완료 주문 / 완료된 주문  
+    <img src="./public/img/markdown-cafeadmin.PNG"  width="70%" height="70%"/>  
+
+- **Admin** - 신고 내역 확인  
+    <img src="./public/img/markdown-developer.PNG"  width="70%" height="70%"/>  
+
+## Youtube Link
