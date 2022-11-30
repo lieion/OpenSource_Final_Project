@@ -130,7 +130,6 @@
             {
                 login_state=1;
                 loginBtnPart.innerText = 'Log-Out';
-
                 signUpPart.innerText = 'Banning';
                 signUpPart.disabled=true;   
                 /*log - in btn이 클릭되면 login html로 이동한다*/
@@ -140,13 +139,13 @@
                 });
                 /*sign up btn이 클릭되면 sign-up html로 이동한다*/
                 signup_btn.addEventListener("click",()=>{
-                    location.href="./public/myPage.html"
+                    location.href="./public/engineerPage.html"
                 });
                 
                 
             }
 
-            //pandorothy table 관련해서 Post로 id에 맞는 주문 정보를 받고 표를 그린다.
+            //bantable 관련해서 Post로 id에 맞는 주문 정보를 받고 표를 그린다.
             let bantable=document.getElementById('bantable');
             let bantableHTML="<thead><tr><th scope=\"col\">#</th><th scope=\"col\">Student ID</th><th scope=\"col\">Password</th><th scope=\"col\">Class</th></tr></thead>";
             $.ajax({

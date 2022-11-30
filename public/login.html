@@ -126,6 +126,7 @@
                         login_data=JSON.parse(data);
                         localStorage.setItem('id',login_data.state);
                         localStorage.setItem('auth',login_data.auth);
+                        //유저정보에 신고됨이 있으면 경고창을 띄운다.
                         if(login_data.ban===1){
                             alert("신고를 받은 계정입니다");
                         }

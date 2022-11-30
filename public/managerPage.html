@@ -152,6 +152,7 @@
                 
             }
 
+            //확인을 눌러서 제조중에서 완성 상태로 바꾼다.
             function innerClick(n){
                 $.ajax({
                     type: "POST",
@@ -170,6 +171,7 @@
                 window.location.replace("./managerPage.html")
             }
 
+            //노쇼한 유저에 대해서 신고한다. 
             function banuser(n){
                 $.ajax({
                     type: "POST",
@@ -210,6 +212,7 @@
                                 orderedtableHTML+="<td>"+n.order[0]+"</td>";
                                 orderedtableHTML+="<td rowspan=\""+n.menu.length+"\">"+n.order_price+"</td>";
                                 orderedtableHTML+="<td rowspan=\""+n.menu.length+"\">"+n.order_time+"</td>";
+                                //완료 버튼을 통해서 waiting table에 주문 정보가 가게 한다.
                                 orderedtableHTML+="<td rowspan=\""+n.menu.length+"\">"+"<button type=\"button\" class=\"btn btn-warning me-2\" id=\""+ "ordered" + n.no +"\" onclick=\"innerClick("+n.no+");\">완료</button>"+"</td>";
                                 orderedtableHTML+="</tr>";
                                 for(let i=1; i<n.menu.length; i++){
@@ -228,6 +231,7 @@
                                 orderedtableHTML_Fin+="<td>"+n.order[0]+"</td>";
                                 orderedtableHTML_Fin+="<td rowspan=\""+n.menu.length+"\">"+n.order_price+"</td>";
                                 orderedtableHTML_Fin+="<td rowspan=\""+n.menu.length+"\">"+n.order_time+"</td>";
+                                //onclick으로 버튼에 함수를 추가한다 확인은 그 목록을 안보이게 하고 신고는 유저 신고와 동시에 목록에서 삭제하게 한다.
                                 orderedtableHTML_Fin+="<td rowspan=\""+n.menu.length+"\">"+"<button type=\"button\" class=\"btn btn-warning me-2\" id=\""+ "ordered" + n.no +"\" onclick=\"innerClick("+n.no+");\">완료</button>"+"</td>";
                                 orderedtableHTML_Fin+="<td rowspan=\""+n.menu.length+"\">"+"<button type=\"button\" class=\"btn btn-warning me-2\" id=\""+ "ordered" + n.no +"\" onclick=\"banuser("+n.sid+"); innerClick("+n.no+");\">신고</button>"+"</td>";
                                 orderedtableHTML_Fin+="</tr>";

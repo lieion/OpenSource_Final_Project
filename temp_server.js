@@ -10,23 +10,43 @@ app.use(cors());
 app.use(express.json()) // for parsing application/json
 app.use(express.static('public'))
 let userInfo = []; //유저 로그인 정보
-let blueportMenu=new Array();
-let cafenamuMenu=new Array();
-let pandorothyMenu=new Array();
-let blue_orderList=[];
-let namu_orderList=[];
+let blueportMenu=new Array();  //Blue Port 메뉴 정보
+let cafenamuMenu=new Array(); //카페 나무 메뉴 정보
+let pandorothyMenu=new Array(); //팬도로시 메뉴 정보
+let blue_orderList=[]; //blue port 주문 정보 
+let namu_orderList=[]; //
 let pandorothy_orderList=[];
 
-let blue_orderList_fin=[];
-let namu_orderList_fin=[];
-let pandorothy_orderList_fin=[];
+/*
+    유저 정보 객체 정보 (user Info)
+    student_number : 학번 및 아이디
+    password= 비밀번호
+    class : 유저 직군
+    logstate : 0 유저 밴 정보
+
+    메뉴 정보 객체 정보 (cafenamuMenu)
+    mid : 메뉴 코드
+    name : 이름
+    price : 가격
 
 
-//개발용으로 확인 용
+    주문 정보의 객체 정보 (ex. blue_orderList)
+    user : 주문자 학번
+    market : 주문 대상 가게
+    order : 주문 개수
+    menu_price : 메뉴 당 가격
+    order_time : 주문 시간
+    order_price : 주문 총 가격
+    order_menu : 주문 가게 메뉴
+
+*/
+
+//개발용으로 가입 유저 확인 용
 app.get('/signup', (req, res) => {
     res.send(userInfo);
 })
 
+//회원가입
 app.post('/signup', (req, res) => {
     let state=0;
     //학번 검사를 통해 이미 회원가입을 했는지 확인
@@ -46,18 +66,22 @@ app.post('/signup', (req, res) => {
         newUser.password=req.body.passw;//비밀번호
         newUser.class=req.body.classification;//분류
         newUser.logstate=0;//로그인 상태 (변경 가능)
-        newUser.banned=0;//banned 0 normal, 1 advise(alert to manager), 2 banned (can't login)
+        
         userInfo.push(newUser);
         res.status(200).end();
     }
     
 })
 
+
+//밴 된 유저 목록을 보낸다.
 app.post('/getBan',(req,res)=>{
     let ret = JSON.stringify(userInfo.filter((n)=>n.logstate===1))
     res.send(ret);
 })
 
+
+//로그인 요청 정보를 POST로 받는다.
 app.post('/logins',(req,res)=>{
     let ret=new Object();
     ret.state=0;
@@ -85,6 +109,7 @@ app.post('/logins',(req,res)=>{
     }
 })
 
+//통합적으로 주문 요청
 app.post('/order',(req,res)=>{ //주문
     let inputOrder=new Object();
     inputOrder.user=req.body.student_number;
@@ -227,6 +252,9 @@ app.get('/cafenamuOrder', (req, res) => {
 app.get('/pandorothyOrder', (req, res) => {
     res.send(JSON.stringify(pandorothy_orderList));
 })
+/*  개발용 */
+
+
 
 app.post('/banUser',(req,res) => {
     console.log("BANNNNN");
@@ -248,6 +276,7 @@ app.post('/mangerPage', (req, res) => {
     let sid=parseInt(req.body.id);
     let ret=[];
     let retno=1;
+    //카페 나무에게 할당된 학번인 경우
     if(sid>=9000000000 && sid<=9099999999) {
         namu_orderList.forEach(ord=>{
             let tempObj=new Object();
@@ -266,6 +295,7 @@ app.post('/mangerPage', (req, res) => {
         })
         res.send(JSON.stringify(ret));
     }
+    //블루 포트에 할당된 학번인 경우
     else if(sid>=9100000000 && sid<=9199999999){
         blue_orderList.forEach(ord=>{
             let tempObj=new Object();
@@ -283,6 +313,7 @@ app.post('/mangerPage', (req, res) => {
         })
         res.send(JSON.stringify(ret));
     }
+    //팬도로시에 할당된 학번인 경우
     else if(sid>=9200000000 && sid<=9299999999){
         pandorothy_orderList.forEach(ord=>{
             let tempObj=new Object();
@@ -300,12 +331,13 @@ app.post('/mangerPage', (req, res) => {
         })
         res.send(JSON.stringify(ret));
     }
+    //오류 감지
     else{
         res.status(400).end();
     }
 })
 
-
+//orderlist의 isDone을 변화시킨다. => managerPage에서 제조중=> 완성
 app.post('/moveDone', (req, res) => {
     let sid=req.body.id;
     let idx=req.body.idx;
@@ -330,7 +362,7 @@ app.listen(port, () => {
     newUser.password="qwerty123!";
     newUser.class="engineer";
     newUser.logstate=0;
-    newUser.banned=0;//banned 0 normal, 1 advise(alert to manager), 2 banned (can't login)
+    
     userInfo.push(newUser);
 
     let newUserC=new Object();
@@ -338,7 +370,7 @@ app.listen(port, () => {
     newUserC.password="qwerty123!";
     newUserC.class="cafemanager";
     newUserC.logstate=0;
-    newUserC.banned=0;//banned 0 normal, 1 advise(alert to manager), 2 banned (can't login)
+    
     userInfo.push(newUserC);
 
     let newUserS=new Object();
@@ -346,7 +378,7 @@ app.listen(port, () => {
     newUserS.password="qwerty123!";
     newUserS.class="education";
     newUserS.logstate=0;
-    newUserS.banned=0;//banned 0 normal, 1 advise(alert to manager), 2 banned (can't login)
+    
     userInfo.push(newUserS);
     
     /*
