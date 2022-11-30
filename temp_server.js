@@ -10,10 +10,10 @@ app.use(cors());
 app.use(express.json()) // for parsing application/json
 app.use(express.static('public'))
 let userInfo = []; //유저 로그인 정보
-let blueportMenu=new Array();  //Blue Port 메뉴 정보
+let bluepotMenu=new Array();  //Blue pot 메뉴 정보
 let cafenamuMenu=new Array(); //카페 나무 메뉴 정보
 let pandorothyMenu=new Array(); //팬도로시 메뉴 정보
-let blue_orderList=[]; //blue port 주문 정보 
+let blue_orderList=[]; //blue pot 주문 정보 
 let namu_orderList=[]; //
 let pandorothy_orderList=[];
 
@@ -139,8 +139,8 @@ app.post('/order',(req,res)=>{ //주문
 })
 
 
-//blue port에 대해서 주문 정보를 보내준다.
-app.post('/blueportOrder', (req, res) => {
+//blue pot에 대해서 주문 정보를 보내준다.
+app.post('/bluepotOrder', (req, res) => {
     console.log(req.body)
     let sid=req.body.id;
     let ret=[];
@@ -156,9 +156,9 @@ app.post('/blueportOrder', (req, res) => {
             tempObj.menu=ord.order_menu;
             tempObj.menu_price=ord.menu_price;
             tempObj.order=ord.order;
-            for (let i=0;i<blueportMenu.length; i++)
+            for (let i=0;i<bluepotMenu.length; i++)
             {
-                result+=ord.order[i]*blueportMenu[i][2];
+                result+=ord.order[i]*bluepotMenu[i][2];
             }
             tempObj.order_price=result
             tempObj.orderStatus=ord.isDone;
@@ -186,7 +186,7 @@ app.post('/cafeNamuOrder', (req, res) => {
             tempObj.menu=ord.order_menu;
             tempObj.menu_price=ord.menu_price;
             tempObj.order=ord.order;
-            for (let i=0;i<blueportMenu.length; i++)
+            for (let i=0;i<bluepotMenu.length; i++)
             {
                 result+=ord.order[i]*cafenamuMenu[i][2];
             }
@@ -215,7 +215,7 @@ app.post('/pandorothyOrder', (req, res) => {
             tempObj.menu=ord.order_menu;
             tempObj.menu_price=ord.menu_price;
             tempObj.order=ord.order;
-            for (let i=0;i<blueportMenu.length; i++)
+            for (let i=0;i<bluepotMenu.length; i++)
             {
                 result+=ord.order[i]*pandorothyMenu[i][2];
             }
@@ -229,8 +229,8 @@ app.post('/pandorothyOrder', (req, res) => {
 
 
 /* 개발용 */
-app.get('/blueportMenu', (req, res) => {
-    res.send(JSON.stringify(blueportMenu));
+app.get('/bluepotMenu', (req, res) => {
+    res.send(JSON.stringify(bluepotMenu));
 })  
 
 app.get('/cafenamuMenu', (req, res) => {
@@ -241,7 +241,7 @@ app.get('/pandorothyMenu', (req, res) => {
     res.send(JSON.stringify(pandorothyMenu));
 })
 
-app.get('/blueportOrder', (req, res) => {
+app.get('/bluepotOrder', (req, res) => {
     res.send(JSON.stringify(blue_orderList));
 })  
 
@@ -384,11 +384,11 @@ app.listen(port, () => {
     /*
     json 변환해서 카페 메뉴 정보를 폴더에 넣은 뒤 불러와서 array에 넣어주는 작업
     */
-    fs.readFile('./public/json/blueport.json', (err, data) => {  
+    fs.readFile('./public/json/bluepot.json', (err, data) => {  
         if (err) throw err
         temp=JSON.parse(data)
         temp.forEach((item)=>{
-            blueportMenu.push([item.mId,item.name,parseInt(item.price)])
+            bluepotMenu.push([item.mId,item.name,parseInt(item.price)])
         });
     });
 
