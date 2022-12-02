@@ -46,4 +46,4 @@ npm start
     <img src="./public/img/markdown-developer.PNG"  width="70%" height="70%"/>  
 
 ## Youtube Link
-https://youtu.be/OkiQl_mJS78[https://youtu.be/OkiQl_mJS78]
+https://youtu.be/OkiQl_mJS78
