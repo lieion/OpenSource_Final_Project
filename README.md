@@ -26,7 +26,7 @@ npm start
     1. My Page에서 주문 현황 확인
   - 카페 관리자
     1. 주문 확인 및 음료 완성 알림 기능
-    1. 고객이 픽업 롼료한 주문 clear하는 기능
+    1. 고객이 픽업 완료한 주문 clear하는 기능
     1. No-show 고객 신고 기능
   - Admin
     1. 신고가 접수되어 Ban된 사용자를 확인할 수 있다.
@@ -46,3 +46,4 @@ npm start
     <img src="./public/img/markdown-developer.PNG"  width="70%" height="70%"/>  
 
 ## Youtube Link
+https://youtu.be/OkiQl_mJS78[https://youtu.be/OkiQl_mJS78]
